@@ -1,0 +1,46 @@
+export const galleryFields = [
+  {
+    Type: 'group',
+    Label: 'Image Gallery',
+    Condition: null,
+    Collapsible: true,
+    Fields: [
+      {
+        Type: 'taglist',
+        FieldID: 'gallery_filters',
+        Label: 'Filter Tags',
+        Condition: null,
+        IsRequired: false,
+        Validators: [],
+      },
+      {
+        Type: 'text',
+        FieldID: 'gallery_title',
+        Label: 'Gallery Title',
+        Condition: null,
+        IsRequired: false,
+        Validators: [],
+      },
+      {
+        Type: 'select',
+        FieldID: 'gallery_filter_style',
+        Label: 'Filter Style',
+        Condition: null,
+        IsRequired: false,
+        Validators: [],
+        Options: 'buttons:Buttons;active-outline:Text with active outline',
+        Delimiter: ';',
+        ValueDelimiter: ':',
+        DefaultValue: 'buttons',
+      },
+      {
+        Type: 'imagelist',
+        FieldID: 'gallery_images',
+        Label: 'Gallery Images',
+        Condition: null,
+        IsRequired: false,
+        Validators: [],
+      },
+    ],
+  },
+];

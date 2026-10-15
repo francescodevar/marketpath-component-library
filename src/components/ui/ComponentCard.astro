@@ -1,0 +1,33 @@
+---
+import { previewDocument } from '../../lib/utils.js';
+
+const { component } = Astro.props;
+const searchableText = [
+  component.name,
+  component.category,
+  component.id,
+  component.description,
+  ...component.tags,
+].join(' ').toLowerCase();
+---
+
+<article
+  class="component-card"
+  data-component
+  data-category={component.category}
+  data-search={searchableText}
+>
+  <button class="card-preview-button" data-open={component.id} aria-label={`Preview ${component.name}`}>
+    <div class="preview-chrome" aria-hidden="true"><span class="chrome-dots"><i></i><i></i><i></i></span><span class="chrome-label">{component.id} / preview</span><span class="expand-icon">⤢</span></div>
+    <div class="card-preview"><iframe tabindex="-1" inert loading="lazy" sandbox="" title={`${component.name} thumbnail`} srcdoc={previewDocument(component, { bootstrap: false })}></iframe></div>
+  </button>
+  <div class="card-info">
+    <div class="card-heading"><span class="card-category">{component.category}</span><span class="card-id">{component.id}</span></div>
+    <h2><button data-open={component.id}>{component.name}</button></h2>
+    <p class="card-description">{component.description}</p>
+    <div class="card-bottom">
+      <div class="card-tags"><span class="tag">{component.customCss ? 'Minimal CSS' : 'Bootstrap only'}</span><span class="tag">{component.customJs ? 'Custom JS' : component.bootstrapJs ? 'Bootstrap JS' : 'No custom JS'}</span><span class="tag">{component.tags[0]}</span></div>
+      <button class="view-code" data-open={component.id} data-open-tab="template" aria-label={`View code for ${component.name}`}>View code <span aria-hidden="true">→</span></button>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,56 @@
+export const heroBackgroundFields = [
+  {
+    Type: 'group',
+    Label: 'Background Image Hero',
+    Condition: null,
+    Collapsible: true,
+    Fields: [
+      {
+        Type: 'text',
+        FieldID: 'hero_01_eyebrow',
+        Label: 'Eyebrow',
+        Condition: null,
+        IsRequired: false,
+        Placeholder: 'A short introduction',
+      },
+      {
+        Type: 'text',
+        FieldID: 'hero_01_title',
+        Label: 'Title',
+        Condition: null,
+        IsRequired: true,
+        Placeholder: 'Your headline',
+      },
+      {
+        Type: 'textarea',
+        FieldID: 'hero_01_description',
+        Label: 'Description',
+        Condition: null,
+        IsRequired: false,
+      },
+      {
+        Type: 'text',
+        FieldID: 'hero_01_button_text',
+        Label: 'Button text',
+        Condition: null,
+        IsRequired: false,
+      },
+      {
+        Type: 'url',
+        FieldID: 'hero_01_button_link',
+        Label: 'Button link',
+        Condition: null,
+        IsRequired: false,
+        Subtext: 'Use a page link or a trusted HTTPS URL. Both text and link are needed.',
+      },
+      {
+        Type: 'image',
+        FieldID: 'hero_01_image',
+        Label: 'Image',
+        Condition: null,
+        IsRequired: false,
+        Subtext: 'Choose an image with descriptive alt text. See Notes for the image preset.',
+      },
+    ],
+  },
+];

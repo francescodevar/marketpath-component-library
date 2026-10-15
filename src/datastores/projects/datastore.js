@@ -1,0 +1,107 @@
+export default {
+  id: 'projects',
+  name: 'Projects',
+  guidPlaceholder: 'd305845c-b6c1-45c9-9ebc-4ed879ee7016',
+  description: 'Shared project records for project cards and project detail pages.',
+  fields: [
+    {
+      Type: 'group',
+      Label: 'Project Content',
+      Condition: null,
+      Collapsible: true,
+      Fields: [
+        {
+          Type: 'image',
+          FieldID: 'project_image',
+          Label: 'Image',
+          Condition: null,
+          IsRequired: false,
+        },
+        {
+          Type: 'html',
+          FieldID: 'project_summary',
+          Label: 'Summary',
+          Condition: null,
+          IsRequired: false,
+          Validators: [],
+        },
+        {
+          Type: 'html',
+          FieldID: 'project_content',
+          Label: 'Content',
+          Condition: null,
+          IsRequired: false,
+          Validators: [],
+        },
+      ],
+    },
+    {
+      Type: 'group',
+      Label: 'Project Images',
+      Condition: null,
+      Collapsible: true,
+      Fields: [
+        {
+          Type: 'imagelist',
+          FieldID: 'project_images',
+          Label: 'Project Images',
+          Condition: null,
+          IsRequired: false,
+          Validators: [],
+        },
+      ],
+    },
+    {
+      Type: 'group',
+      Label: 'Project Details',
+      Condition: null,
+      Collapsible: true,
+      Fields: [
+        {
+          Type: 'fieldset',
+          FieldID: 'projects_details',
+          Label: 'Projects Details',
+          Condition: null,
+          IsRequired: false,
+          Validators: [],
+          Fields: [
+            {
+              Type: 'text',
+              FieldID: 'title_details',
+              Label: 'Title',
+              Condition: null,
+              IsRequired: false,
+              Validators: [],
+            },
+            {
+              Type: 'text',
+              FieldID: 'detail_details',
+              Label: 'Detail',
+              Condition: null,
+              IsRequired: false,
+              Validators: [],
+            },
+          ],
+          AllowMultiple: true,
+          InitCollapsed: false,
+        },
+      ],
+    },
+    {
+      Type: 'group',
+      Label: 'Project Overview',
+      Condition: null,
+      Collapsible: true,
+      Fields: [
+        {
+          Type: 'html',
+          FieldID: 'project_overview',
+          Label: 'Content',
+          Condition: null,
+          IsRequired: false,
+          Validators: [],
+        },
+      ],
+    },
+  ],
+};

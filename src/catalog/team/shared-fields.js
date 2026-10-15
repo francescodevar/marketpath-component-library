@@ -1,0 +1,40 @@
+export const teamFields = [
+  {
+    Type: 'group',
+    Label: 'Team Section',
+    Condition: null,
+    Collapsible: true,
+    Fields: [
+      {
+        Type: 'text',
+        FieldID: 'team_section_title',
+        Label: 'Title',
+        Condition: null,
+        IsRequired: false,
+        Validators: [],
+        Placeholder: 'e.g. Meet the team',
+        DefaultValue: 'Meet the team',
+      },
+      {
+        Type: 'textarea',
+        FieldID: 'team_intro_text',
+        Label: 'Intro Text',
+        Condition: null,
+        IsRequired: false,
+        Validators: [],
+        Placeholder: 'Introduce the people behind your work.',
+        DefaultValue: 'The people behind the work, bringing care and experience to every project.',
+      },
+      {
+        Type: 'datastoreitemlist',
+        FieldID: 'team_members',
+        Label: 'Team Members',
+        Subtext: 'Choose and order the team members to display.',
+        Condition: null,
+        IsRequired: false,
+        Validators: [],
+        DatastoreGUID: 'WRITE HERE YOUR TEAM MEMBERS DATASTORE GUID',
+      },
+    ],
+  },
+];

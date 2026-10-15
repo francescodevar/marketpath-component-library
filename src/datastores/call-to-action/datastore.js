@@ -1,0 +1,57 @@
+export default {
+  id: 'call-to-action',
+  name: 'Call to Action',
+  guidPlaceholder: 'WRITE HERE YOUR CALL TO ACTION GUID',
+  description: 'Reusable eyebrow, title, rich description, and button content for CTA components.',
+  fields: [
+    {
+      Type: 'group',
+      Label: 'Call to Action Details',
+      Condition: null,
+      Collapsible: true,
+      Fields: [
+        {
+          Type: 'text',
+          FieldID: 'cta_eyebrow',
+          Label: 'Eyebrow',
+          Condition: null,
+          IsRequired: false,
+          Validators: [],
+        },
+        {
+          Type: 'html',
+          FieldID: 'cta_title',
+          Label: 'Title',
+          Condition: null,
+          IsRequired: true,
+          Validators: [],
+        },
+        {
+          Type: 'html',
+          FieldID: 'cta_description',
+          Label: 'Description',
+          Condition: null,
+          IsRequired: false,
+          Validators: [],
+        },
+        {
+          Type: 'text',
+          FieldID: 'cta_button_text',
+          Label: 'Button Text',
+          Condition: null,
+          IsRequired: false,
+          Validators: [],
+        },
+        {
+          Type: 'url',
+          FieldID: 'cta_button_link',
+          Label: 'Button Link',
+          Condition: null,
+          IsRequired: false,
+          Validators: [],
+          DoNotValidateCustom: false,
+        },
+      ],
+    },
+  ],
+};

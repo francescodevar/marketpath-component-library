@@ -1,0 +1,127 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ComponentCard from '../components/ui/ComponentCard.astro';
+import FooterThemePicker from '../components/ui/FooterThemePicker.astro';
+import { components } from '../data/components.js';
+import { datastores } from '../data/datastores.js';
+import { imagePresets } from '../data/presets.js';
+import { categoryLabel, categoryGroupsFor } from '../lib/utils.js';
+
+const categories = [...new Set(components.map((component) => component.category))];
+const categoryGroups = categoryGroupsFor(categories);
+const componentCountByCategory = Object.fromEntries(categories.map((category) => [category, components.filter((component) => component.category === category).length]));
+const componentCountByGroup = Object.fromEntries(categoryGroups.map((group) => [group.id, group.categories.reduce((sum, category) => sum + componentCountByCategory[category], 0)]));
+---
+
+<Layout>
+  <a class="skip-link" href="#library">Skip to components</a>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Marketpath Components home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>Marketpath <strong>Components</strong></span></a>
+    <nav class="header-links" aria-label="Resources"><span class="version">LIBRARY / 1.0</span><a class="playground-link" href="/playground/">Playground <span aria-hidden="true">↗</span></a><a href="https://help.marketpath.com/" target="_blank" rel="noopener">Documentation ↗</a></nav>
+  </header>
+  <main class="shell">
+    <section class="intro" aria-labelledby="pageTitle">
+      <div><div class="eyebrow"><span class="status-dot"></span> THE WIREFRAME COLLECTION</div><h1 id="pageTitle">A better starting point.</h1><p>Reusable Bootstrap sections for Marketpath CMS.<br>Find your layout. Copy the code. Make it yours.</p><div class="intro-badges"><span><b aria-hidden="true">B</b> Bootstrap 5.3</span><span><span class="small-code" aria-hidden="true">{ }</span> Marketpath Liquid</span><span><span aria-hidden="true">✓</span> Ready to customize</span></div></div>
+        <div class="collection-stats" aria-label="Collection overview"><div><strong id="totalCount">{components.length}</strong><span>components</span></div><span class="stat-divider"></span><div><strong id="categoryCount">{categoryGroups.length}</strong><span>groups</span></div></div>
+    </section>
+    <section id="library" aria-label="Component library">
+      <div class="library-controls">
+        <nav id="filters" class="filters" aria-label="Filter by category">
+          <button class="filter" data-filter="all" aria-pressed="true">All components <span class="filter-count">{components.length}</span></button>
+          {categoryGroups.map((group) => <details class="filter-group" data-filter-group={group.categories.join(',')}>
+            <summary class="filter filter-group-toggle">{group.label}<span class="filter-count">{componentCountByGroup[group.id]}</span><span class="filter-caret" aria-hidden="true"></span></summary>
+            <div class="filter-menu" aria-label={`${group.label} categories`}>
+              {group.categories.map((category) => <button class="filter-menu-item" type="button" data-filter={category} aria-pressed="false">{categoryLabel(category)}<span class="filter-count">{componentCountByCategory[category]}</span></button>)}
+            </div>
+          </details>)}
+        </nav>
+        <label class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></svg><input id="searchInput" type="search" placeholder="Search components…" aria-label="Search components"><kbd aria-hidden="true">/</kbd></label>
+      </div>
+      <div class="results-bar">
+        <p id="componentCount" role="status" aria-live="polite"></p>
+         <div class="results-actions"><span>Thoughtfully simple. Endlessly reusable.</span>{imagePresets.length > 0 && <button id="viewPresets" class="datastore-button" type="button">View Presets <span aria-hidden="true">↗</span></button>}{datastores.length > 0 && <button id="viewDatastore" class="datastore-button" type="button">View Datastore <span aria-hidden="true">↗</span></button>}</div>
+      </div>
+      <div id="componentGrid" class="component-grid">
+        {components.map((component) => <ComponentCard component={component} />)}
+        <div class="empty-state" id="emptyState" hidden>
+          <h2>A different search might do it.</h2>
+          <p>Try “image”, “two-column”, or a component ID.</p>
+          <button class="reset-button" id="resetFilters">Clear filters</button>
+        </div>
+      </div>
+      <noscript><p>Enable JavaScript to browse and copy components.</p></noscript>
+    </section>
+    <footer class="app-footer"><span><strong>Marketpath</strong> / Component library</span><span>Built for the next thing you build.</span><a href="https://help.marketpath.com/custom-fields" target="_blank" rel="noopener">Custom fields guide ↗</a></footer>
+  </main>
+  <dialog id="componentDialog" aria-labelledby="dialogTitle">
+    <header class="dialog-header"><div><div id="dialogCategory" class="eyebrow"></div><h2 id="dialogTitle"></h2><p id="dialogDescription"></p></div><button id="closeDialog" class="icon-button" aria-label="Close component" autofocus>×</button></header>
+    <dl id="componentMeta" class="metadata"></dl>
+    <div id="servicePackageActions" class="service-package-actions" hidden>
+      <div class="service-package-copy"><strong>Marketpath import package</strong><span>Template, Page Fields and datastore, with optional sample services.</span></div>
+      <div class="service-package-buttons">
+        <button class="copy-button" type="button" data-service-package="empty">Download Empty Package</button>
+        <button class="copy-button service-package-create" type="button" data-service-package="create">Create Files · 3 Services</button>
+      </div>
+    </div>
+    <div class="detail-tabs" role="tablist" aria-label="Component details">
+      <button id="tab-preview" role="tab" aria-controls="panel-preview" aria-selected="true" data-tab="preview">Preview</button>
+      <button id="tab-template" role="tab" aria-controls="panel-template" aria-selected="false" tabindex="-1" data-tab="template">Template <span aria-hidden="true">&lt;/&gt;</span></button>
+      <button id="tab-fields" role="tab" aria-controls="panel-fields" aria-selected="false" tabindex="-1" data-tab="fields">Fields <span aria-hidden="true">{ }</span></button>
+      <button id="tab-notes" role="tab" aria-controls="panel-notes" aria-selected="false" tabindex="-1" data-tab="notes">Notes</button>
+    </div>
+    <FooterThemePicker />
+    <section id="panel-preview" class="tab-panel" role="tabpanel" aria-labelledby="tab-preview">
+      <div class="preview-toolbar">
+        <span>Responsive preview <small id="previewWidth">1200 px</small></span>
+        <div class="device-options" role="group" aria-label="Preview viewport"><button data-width="1200" aria-pressed="true">Desktop</button><button data-width="768" aria-pressed="false">Tablet</button><button data-width="390" aria-pressed="false">Mobile</button></div>
+      </div>
+      <div id="previewStage" class="preview-stage"><div id="previewSizer"><iframe id="previewFrame" title="Component preview" sandbox="allow-scripts"></iframe></div></div>
+      <p class="preview-caption">Static sample content · Isolated Bootstrap styles · Scroll inside the preview to explore</p>
+    </section>
+    <section id="panel-template" class="tab-panel" role="tabpanel" aria-labelledby="tab-template" hidden><div class="code-toolbar"><span>Marketpath Liquid / HTML</span><button class="copy-button" data-copy="template">Copy Template <span aria-hidden="true">⧉</span></button></div><pre tabindex="0"><code id="templateCode" class="language-liquid"></code></pre></section>
+    <section id="panel-fields" class="tab-panel" role="tabpanel" aria-labelledby="tab-fields" hidden>
+      <div class="code-toolbar"><span>Page Custom Fields / JSON</span><button class="copy-button" data-copy="fields">Copy Fields <span aria-hidden="true">⧉</span></button></div>
+      <pre tabindex="0"><code id="fieldsCode" class="language-json"></code></pre>
+    </section>
+    <section id="panel-notes" class="tab-panel notes-panel" role="tabpanel" aria-labelledby="tab-notes" hidden><h3>Before you use this component</h3><ul id="notesList"></ul><a href="https://help.marketpath.com/" target="_blank" rel="noopener">Marketpath documentation ↗</a></section>
+    <div id="copyStatus" class="copy-status" role="status" aria-live="polite"></div>
+  </dialog>
+
+  <dialog id="datastoreDialog" aria-labelledby="datastoreDialogTitle">
+    <header class="dialog-header"><div><div class="eyebrow">SHARED CMS DATA</div><h2 id="datastoreDialogTitle">Datastore schemas</h2><p id="datastoreDescription">Shared Marketpath schemas. Reference each datastore using its GUID in the appropriate template tag or Custom Field.</p></div><button id="closeDatastoreDialog" class="icon-button" aria-label="Close datastore schemas" autofocus>×</button></header>
+    <div class="datastore-panel">
+      <label class="datastore-picker" for="datastoreSelect">Datastore
+        <select id="datastoreSelect">{datastores.map((datastore) => <option value={datastore.id}>{datastore.name}</option>)}</select>
+      </label>
+      <p id="datastoreUsage" class="datastore-description"></p>
+       <p class="datastore-guid"><strong>Datastore GUID:</strong> <code id="datastoreGuid"></code></p>
+      <div class="code-toolbar"><span id="datastoreCodeTitle">Datastore item fields / JSON</span><button class="copy-button" data-copy="datastore">Copy Datastore Fields <span aria-hidden="true">⧉</span></button></div>
+      <pre tabindex="0"><code id="datastoreCode" class="language-json"></code></pre>
+      <div id="datastoreCopyStatus" class="copy-status" role="status" aria-live="polite"></div>
+    </div>
+  </dialog>
+
+  <dialog id="imagePresetsDialog" aria-labelledby="imagePresetsTitle">
+    <header class="dialog-header">
+      <div>
+        <div class="eyebrow">IMAGE ASSETS</div>
+        <h2 id="imagePresetsTitle">Marketpath Image Presets</h2>
+        <p>Unique presets referenced by the catalog’s component templates, with the components that use each one.</p>
+      </div>
+      <div class="preset-dialog-actions">
+        <button id="downloadImagePresets" class="copy-button" type="button">Download Import JSON <span aria-hidden="true">↓</span></button>
+        <button id="closeImagePresetsDialog" class="icon-button" aria-label="Close image presets" autofocus>×</button>
+      </div>
+    </header>
+    <div class="datastore-panel">
+      <p id="imagePresetsCount" class="datastore-description"></p>
+      <div id="imagePresetList" class="image-preset-list"></div>
+      <p class="datastore-description mt-3 mb-0">The downloaded JSON contains the <code>ImagePreset</code> array in Marketpath import format.</p>
+    </div>
+    <div id="imagePresetsStatus" class="copy-status" role="status" aria-live="polite"></div>
+  </dialog>
+
+  <script>
+    import '../scripts/gallery.js';
+  </script>
+</Layout>

@@ -1,0 +1,47 @@
+export const contactFields = [
+  {
+    Type: 'group',
+    Label: 'Contact Page',
+    Condition: null,
+    Collapsible: true,
+    Fields: [
+      {
+        Type: 'text',
+        FieldID: 'contact_01_title',
+        Label: 'Section Title',
+        Condition: null,
+        IsRequired: false,
+        RequiredMessage: 'This field is required',
+        Validators: [],
+        Placeholder: 'e.g. Get in touch',
+      },
+      {
+        Type: 'textarea',
+        FieldID: 'contact_01_description',
+        Label: 'Intro Text',
+        Condition: null,
+        IsRequired: false,
+        Validators: [],
+        Placeholder: 'Tell visitors how your team can help.',
+      },
+      {
+        Type: 'form',
+        FieldID: 'contact_01_form',
+        Label: 'Contact Form',
+        Subtext: 'Select the Marketpath form to display.',
+        Condition: null,
+        IsRequired: false,
+      },
+      {
+        Type: 'text',
+        FieldID: 'contact_01_google_maps_embed_url',
+        Label: 'Google Maps Embed URL',
+        Subtext: 'Paste only the src URL from the Google Maps embed code.',
+        Condition: null,
+        IsRequired: false,
+        Validators: [],
+        Placeholder: 'https://www.google.com/maps/embed?pb=...',
+      },
+    ],
+  },
+];

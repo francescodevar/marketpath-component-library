@@ -1,0 +1,61 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { components } from '../data/components.js';
+import { categoryLabel, categoryGroupsFor, previewDocument } from '../lib/utils.js';
+
+const categories = [...new Set(components.map((component) => component.category))];
+const categoryGroups = categoryGroupsFor(categories);
+---
+
+<Layout title="Playground — Marketpath Components" description="Build a page visually with reusable Marketpath components.">
+  <main class="playground-app">
+    <header class="pg-topbar">
+      <a class="brand" href="/" aria-label="Marketpath Components home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>Marketpath <strong>Components</strong></span></a>
+      <div class="pg-breadcrumb"><span aria-hidden="true">/</span><strong>Playground</strong><span class="pg-saved"><i></i> Saved in this browser</span></div>
+      <nav class="pg-top-actions" aria-label="Playground actions"><a href="/" class="pg-library-link">← Component library</a><button id="createTextExamples" class="pg-examples-toggle" type="button" aria-pressed="false" title="Include one example Article and four items per selected datastore"><span aria-hidden="true">✦</span> Create text examples</button><button id="exportMarketpath" class="pg-marketpath-button" type="button" disabled title="Download a minimal JSON package for Marketpath CMS"><span aria-hidden="true">{ }</span> CMS Import JSON</button><button id="exportPage" class="pg-export-button" type="button"><span aria-hidden="true">↥</span> Export HTML</button></nav>
+    </header>
+
+    <div class="pg-toolbar">
+      <div class="pg-page-name"><span class="pg-page-icon" aria-hidden="true">▤</span><strong id="pageTitle">Untitled page</strong><button id="renamePage" type="button" aria-label="Rename page">✎</button></div>
+      <div class="pg-viewport-controls" role="group" aria-label="Preview size"><span>Preview</span><button type="button" data-viewport="1200" aria-pressed="true"><span aria-hidden="true">▱</span> Desktop</button><button type="button" data-viewport="768" aria-pressed="false"><span aria-hidden="true">▯</span> Tablet</button><button type="button" data-viewport="390" aria-pressed="false"><span aria-hidden="true">▯</span> Mobile</button></div>
+      <div class="pg-toolbar-right"><span id="blockCount">0 sections</span><button id="clearPage" type="button" class="pg-clear-button">Clear page</button></div>
+    </div>
+
+    <div class="pg-workspace">
+      <aside class="pg-sidebar pg-components-panel" aria-label="Component library">
+        <div class="pg-panel-heading"><div><span class="pg-panel-kicker">BUILD YOUR PAGE</span><h1>Components</h1></div><span class="pg-count-badge">{components.length}</span></div>
+        <label class="pg-search"><span aria-hidden="true">⌕</span><input id="componentSearch" type="search" placeholder="Search sections…" aria-label="Search components"></label>
+         <label class="pg-category-filter" for="categoryFilter"><span>COMPONENT TYPE</span><select id="categoryFilter"><option value="all">All types</option>{categoryGroups.map((group) => <optgroup label={group.label}>{group.categories.map((category) => <option value={category}>{categoryLabel(category)}</option>)}</optgroup>)}</select></label>
+        <p class="pg-list-label">AVAILABLE SECTIONS <span>Click to add</span></p>
+        <div id="playgroundLibrary" class="pg-component-list">
+          {components.map((component) => <div class="pg-component-entry" data-category={component.category} data-search={`${component.name} ${component.category} ${component.id} ${component.description} ${component.tags.join(' ')}`.toLowerCase()}><button class="pg-component-item" type="button" data-add-component={component.id} aria-label={`Add ${component.name}`}><span class="pg-component-thumbnail" aria-hidden="true"><iframe tabindex="-1" inert loading="lazy" sandbox="" title={`${component.name} thumbnail`} srcdoc={previewDocument(component, { bootstrap: false })}></iframe></span><span class="pg-component-copy"><strong>{component.name}</strong><small>{component.category} · {component.id}</small></span><span class="pg-add-icon" aria-hidden="true">＋</span></button></div>)}
+          <p id="libraryEmpty" class="pg-library-empty" hidden>No components match this search.</p>
+        </div>
+        <div class="pg-sidebar-tip"><span aria-hidden="true">✳</span><p><strong>Make it yours</strong><br>Click a section in the canvas to select and edit it.</p></div>
+      </aside>
+
+      <section class="pg-canvas-area" aria-label="Page canvas">
+        <div class="pg-canvas-toolbar"><span><i class="pg-live-dot"></i> LIVE PREVIEW</span><span id="canvasDimensions">1200 px wide</span><button id="openPreview" type="button" aria-label="Open preview in new tab" title="Open preview in new tab">↗</button></div>
+        <div id="canvasStage" class="pg-canvas-stage">
+          <div id="canvasEmpty" class="pg-canvas-empty"><span class="pg-empty-mark" aria-hidden="true">＋</span><h2>Start with a section</h2><p>Add a component from the left to begin building your page.</p><button type="button" id="addFirstSection">Browse components <span aria-hidden="true">→</span></button><span class="pg-empty-hint">Your changes are saved automatically</span></div>
+          <div id="frameSizer" class="pg-frame-sizer"><iframe id="pageFrame" title="Built page preview" sandbox="allow-same-origin"></iframe></div>
+        </div>
+        <div class="pg-canvas-footer"><span>Select a section to edit its text</span><span>Powered by Bootstrap 5.3</span></div>
+      </section>
+
+      <aside class="pg-sidebar pg-inspector" aria-label="Section settings">
+        <div class="pg-panel-heading"><div><span class="pg-panel-kicker">PAGE STRUCTURE</span><h2>Layers</h2></div><button id="addSection" class="pg-plus-button" type="button" aria-label="Add a section">＋</button></div>
+        <div id="pageLayers" class="pg-layers"><p class="pg-no-layers">Your sections will appear here as you build.</p></div>
+        <div class="pg-inspector-divider"></div>
+        <div class="pg-panel-heading pg-inspector-title"><div><span class="pg-panel-kicker">SELECTED SECTION</span><h2 id="inspectorName">Nothing selected</h2></div></div>
+        <div id="inspectorContent" class="pg-inspector-content"><div class="pg-inspector-placeholder"><span aria-hidden="true">⌖</span><p>Select a section in your canvas or layers panel to see its options.</p></div></div>
+        <div class="pg-inspector-help"><span aria-hidden="true">ⓘ</span> Edit text right on the canvas, then your preview updates automatically.</div>
+      </aside>
+    </div>
+    <div id="playgroundStatus" class="pg-status" role="status" aria-live="polite"></div>
+  </main>
+  <dialog id="exportDialog" class="pg-export-dialog"><form method="dialog"><div class="pg-export-head"><div><span class="pg-panel-kicker">TAKE IT WITH YOU</span><h2>Export your page</h2><p>Preview HTML for your layout. Components are static samples from the library.</p></div><button class="pg-close-dialog" aria-label="Close">×</button></div><textarea id="exportCode" readonly aria-label="Exported page HTML"></textarea><button id="copyExport" type="button" class="pg-export-button">Copy HTML <span aria-hidden="true">⧉</span></button></form></dialog>
+  <script>
+    import '../scripts/playground.js';
+  </script>
+</Layout>
