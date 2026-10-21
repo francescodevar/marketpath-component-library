@@ -2,7 +2,7 @@ import { faqFields, faqSharedFieldIds } from '../shared-fields.js';
 
 export default {
   id: 'faq-01',
-  name: 'FAQ Accordion',
+  name: 'FAQs Accordion',
   category: 'faq',
   prefix: 'faq_',
   sharedFieldsId: 'faq',

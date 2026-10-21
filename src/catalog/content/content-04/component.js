@@ -1,6 +1,6 @@
 export default {
   id: 'content-04',
-  name: 'Text + Image Split',
+  name: 'Content Flexible Text and Image Split',
   category: 'content',
   prefix: 'content_04_',
   customCss: false,
@@ -123,22 +123,7 @@ export default {
       </div>
       <div class="col-12 col-lg-6 order-2">
         <div class="ratio ratio-1x1 overflow-hidden" role="img" aria-label="Illustration of a home improvement project">
-          <svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <rect width="600" height="600" fill="#dce9e5"/>
-            <rect x="44" y="46" width="556" height="366" fill="#7b8e86"/>
-            <path d="M44 106h556M44 166h556M44 226h556M44 286h556M44 346h556" stroke="#97aaa0" stroke-width="8"/>
-            <rect x="305" y="88" width="218" height="168" fill="#c7d9dd" stroke="#f1eddf" stroke-width="14"/>
-            <path d="M414 94v156M312 172h204" stroke="#f1eddf" stroke-width="8"/>
-            <rect y="412" width="600" height="188" fill="#987558"/>
-            <path d="M0 454h600M0 500h600M0 546h600M0 592h600" stroke="#c19b76" stroke-width="6"/>
-            <path d="M0 387h600v34H0z" fill="#ded0b7"/>
-            <path d="M0 0h110v412H0z" fill="#61765d" opacity=".75"/>
-            <circle cx="178" cy="304" r="25" fill="#c39470"/>
-            <path d="M153 300q25-45 50 0" fill="#344044"/>
-            <path d="M158 333l-18 78h90l-18-78z" fill="#426e67"/>
-            <path d="M160 348l-52 58m107-56 54 44" fill="none" stroke="#c39470" stroke-width="15" stroke-linecap="round"/>
-            <path d="M163 406l-22 76m60-76 25 76" fill="none" stroke="#354448" stroke-width="18" stroke-linecap="round"/>
-          </svg>
+          <img src="sample-image:home" class="w-100 h-100 object-fit-cover" alt="">
         </div>
       </div>
     </div>

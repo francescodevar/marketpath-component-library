@@ -1,6 +1,6 @@
 export default {
   id: 'content-06',
-  name: 'Content Left',
+  name: 'Content Image with Benefits List',
   category: 'content',
   prefix: 'content_06_',
   customCss: false,

@@ -55,7 +55,7 @@ const { pathToFileURL } = require('node:url');
   const realComponents = await Promise.all(findFiles(path.join(root, 'catalog'), 'component.js').map(async (file) => (await import(pathToFileURL(file).href)).default));
   const realDatastores = await Promise.all(findFiles(path.join(root, 'datastores'), 'datastore.js').map(async (file) => (await import(pathToFileURL(file).href)).default));
   const realPackage = createMarketpathImport({
-    blocks: [...realComponents.map(({ id }) => ({ id })), { id: 'faq-01' }, { id: 'hero-01' }],
+    blocks: [...realComponents.map(({ id }) => ({ id })), { id: 'faq-01' }, { id: 'hero-03' }],
     pageName: 'Example Site Home',
     components: realComponents,
     datastores: realDatastores,
@@ -119,9 +119,9 @@ const { pathToFileURL } = require('node:url');
   assert.deepEqual(servicesFilesPackage.DatastoreItem.map((item) => item.Title), ['Home repairs', 'Windows & doors', 'Outdoor living']);
   assert(servicesFilesPackage.DatastoreItem.every((item) => item.services_image === ''));
   assert.equal(servicesFilesPackage.Article[0].TemplateGUID, '/pages/_services-02-example.liquid');
-  const heroMarkup = realPackage.Template.find((template) => template.Name === '/partials/playground/hero-01-1.liquid').Markup;
+  const heroMarkup = realPackage.Template.find((template) => template.Name === '/partials/playground/hero-03-1.liquid').Markup;
   const imageTags = [...heroMarkup.matchAll(/\{%-?\s*img\b[\s\S]*?-?%\}/g)].map(([tag]) => tag);
-  assert(imageTags.length > 0, 'Hero 01 image tag should be present');
+  assert(imageTags.length > 0, 'Hero 03 image tag should be present');
   assert(imageTags.every((tag) => !tag.includes('\n')), 'Marketpath img tags must be exported on a single line');
   const logoCarouselPackage = createMarketpathImport({
     blocks: [{ id: 'banner-04' }],

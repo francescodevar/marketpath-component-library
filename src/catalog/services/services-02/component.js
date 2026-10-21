@@ -2,7 +2,7 @@ import { serviceFields } from '../shared-fields.js';
 
 export default {
   id: 'services-02',
-  name: 'Stack Cards',
+  name: 'Services Stack Cards',
   category: 'services',
   prefix: 'services_',
   sharedFieldsId: 'services',
@@ -87,7 +87,7 @@ export default {
           <h2 class="display-4 mb-4">Windows &amp; doors</h2>
           <a href="#" class="btn btn-primary">Learn more <span aria-hidden="true">→</span></a>
         </div>
-        <div class="col-12 col-md-6 col-lg-4 offset-lg-1"><div class="overflow-hidden shadow-sm bg-light d-flex align-items-center justify-content-center" style="aspect-ratio:3 / 2;"><span class="text-secondary small">Service image</span></div></div>
+        <div class="col-12 col-md-6 col-lg-4 offset-lg-1"><div class="overflow-hidden shadow-sm" style="aspect-ratio:3 / 2;"><img src="sample-image:modern" class="w-100 h-100 object-fit-cover" alt="Example service"></div></div>
       </div>
     </div>
   </div>
@@ -99,7 +99,7 @@ export default {
           <h2 class="display-4 mb-4">Decks &amp; outdoors</h2>
           <a href="#" class="btn btn-primary">Learn more <span aria-hidden="true">→</span></a>
         </div>
-        <div class="col-12 col-md-6 col-lg-4 offset-lg-1"><div class="overflow-hidden shadow-sm bg-light d-flex align-items-center justify-content-center" style="aspect-ratio:3 / 2;"><span class="text-secondary small">Service image</span></div></div>
+        <div class="col-12 col-md-6 col-lg-4 offset-lg-1"><div class="overflow-hidden shadow-sm" style="aspect-ratio:3 / 2;"><img src="sample-image:exterior" class="w-100 h-100 object-fit-cover" alt="Example service"></div></div>
       </div>
     </div>
   </div>

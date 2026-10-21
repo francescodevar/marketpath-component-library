@@ -2,7 +2,7 @@ import { createFooterTheme } from '../../../lib/footer-theme.js';
 
 export default {
   id: 'footer-01',
-  name: 'Simple Settings Footer',
+  name: 'Footer Simple Settings',
   category: 'footer',
   prefix: 'footer_01_',
   bootstrap: true,

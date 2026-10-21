@@ -1,4 +1,4 @@
-// Run: node tests/check.cjs — no packages or CMS credentials required.
+// Run: node tests/check.cjs — no Astro build or CMS credentials required.
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -11,6 +11,8 @@ const { pathToFileURL } = require('node:url');
   const { footerMarkupForTheme, footerTemplateForTheme } = await import(pathToFileURL(path.join(root, 'src/lib/footer-theme.js')).href);
   const { categoryGroupsFor, categoryLabel } = await import(pathToFileURL(path.join(root, 'src/lib/utils.js')).href);
   const { collectImagePresets, marketpathImagePresetJson } = await import(pathToFileURL(path.join(root, 'src/lib/image-presets.js')).href);
+  const { createThemeImportZip, createThemeMarketpathImport } = await import(pathToFileURL(path.join(root, 'src/lib/marketpath-export.js')).href);
+  const { strFromU8, unzipSync } = await import('fflate');
   function findFiles(directory, targetName) {
     return fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
       const entryPath = path.join(directory, entry.name);
@@ -28,6 +30,7 @@ const { pathToFileURL } = require('node:url');
   }));
   const components = records.map(({ component }) => component);
   const datastores = datastoreRecords.map(({ datastore }) => datastore);
+  const componentById = new Map(components.map((component) => [component.id, component]));
   const imagePresets = collectImagePresets(components);
   const imagePresetImport = marketpathImagePresetJson(imagePresets);
   assert.deepEqual(imagePresets.map((preset) => preset.code).sort(), [
@@ -64,14 +67,15 @@ const { pathToFileURL } = require('node:url');
   assert(imagePresetImport.ImagePreset.every((preset) => preset.Code && preset.QueryString));
   assert(!imagePresetImport.ImagePreset.some((preset) => preset.Code.includes(' ')));
   const categoryGroups = categoryGroupsFor([...new Set(components.map((component) => component.category))]);
-  assert.deepEqual(categoryGroups.map((group) => group.label), ['Services', 'Projects', 'Layout', 'Resources', 'Content']);
+  assert.deepEqual(categoryGroups.map((group) => group.label), ['Services', 'Projects', 'Specific Section', 'Content', 'Layout']);
   assert.deepEqual(categoryGroups.find((group) => group.id === 'services').categories, ['services', 'inside-services']);
   assert.deepEqual(categoryGroups.find((group) => group.id === 'projects').categories, ['projects', 'inside-projects']);
-  assert.deepEqual(categoryGroups.find((group) => group.id === 'layout').categories, ['hero', 'header', 'footer', 'banner', 'page-title', 'cta', 'thank-you', 'error-404']);
-  assert.deepEqual(categoryGroups.find((group) => group.id === 'resources').categories, ['blog', 'faq', 'gallery']);
-  assert.deepEqual(categoryGroups.find((group) => group.id === 'content').categories, ['content', 'contact', 'testimonials', 'team']);
-  assert(!categoryGroups.find((group) => group.id === 'content').categories.includes('projects'));
+  assert.deepEqual(categoryGroups.find((group) => group.id === 'page-sections').categories, ['blog', 'faq', 'gallery', 'contact', 'testimonials', 'team', 'thank-you', 'error-404']);
+  assert.deepEqual(categoryGroups.find((group) => group.id === 'content').categories, ['hero', 'banner', 'content']);
+  assert.deepEqual(categoryGroups.find((group) => group.id === 'layout').categories, ['header', 'page-title', 'cta', 'footer']);
   assert.equal(categoryLabel('inside-services'), 'Inside Services');
+  assert.equal(categoryLabel('services'), 'Main Services');
+  assert.equal(categoryLabel('projects'), 'Main Projects');
   assert.equal(categoryLabel('inside-projects'), 'Inside Projects');
   assert.equal(categoryLabel('thank-you'), 'Thank You');
   assert.equal(categoryLabel('error-404'), 'Error 404');
@@ -203,7 +207,7 @@ const { pathToFileURL } = require('node:url');
     const datastore = datastores.find((entry) => entry.id === component.settingsDatastoreId);
     assert(datastore, `${component.id}: unknown settingsDatastoreId ${component.settingsDatastoreId}`);
     if (component.template.includes('datastore:')) {
-      assert(component.template.includes(datastore.guidPlaceholder), `${component.id}: Settings datastore GUID does not match its shared schema`);
+      assert(component.template.includes(datastore.guidPlaceholder) || component.template.includes(`datastore:'${datastore.name}'`), `${component.id}: Settings datastore reference does not match its shared schema`);
     }
   }
   const contactPage = components.find((component) => component.id === 'contact-01');
@@ -486,7 +490,7 @@ const { pathToFileURL } = require('node:url');
   assert.equal(faq.datastoreId, 'faqs');
   assert.equal(faqMain.datastoreId, 'faqs');
   assert.equal(faqMain.bootstrapJs, true);
-  assert.equal(faqMain.name, 'FAQ Main');
+  assert.equal(faqMain.name, 'FAQs Main Section');
   assert.equal(faq.sharedFieldsId, 'faq');
   assert.equal(faqMain.sharedFieldsId, faq.sharedFieldsId);
   assert.deepEqual(faqMain.sharedFieldIds, faq.sharedFieldIds);
@@ -673,28 +677,20 @@ const { pathToFileURL } = require('node:url');
   assert(pageTitle02.template.includes('1920x600-crop'));
   assert(pageTitle02.template.includes('col-12 col-md-auto ms-md-auto'));
   assert(pageTitle02.template.includes("entity.url.value | split:'/'"));
-  const hero01 = components.find((component) => component.id === 'hero-01');
   const hero03 = components.find((component) => component.id === 'hero-03');
-  assert(hero01 && hero03);
-  assert.equal(hero01.sharedFieldsId, 'hero_01');
-  assert.equal(hero03.sharedFieldsId, hero01.sharedFieldsId);
-  assert.deepEqual(hero03.fields, hero01.fields);
-  assert.equal(hero01.fields[0].Fields[0].FieldID, 'hero_01_eyebrow');
-  for (const hero of [hero01, hero03]) {
-    assert(hero.template.includes('entity.hero_01_eyebrow.is_valid'));
-    assert(hero.template.includes('fw-bold fst-italic'));
-    assert(hero.template.includes('font-size:18px;'));
-    assert(hero.preview.html.includes('font-size:18px;'));
-  }
+  assert(hero03);
+  assert.equal(hero03.sharedFieldsId, 'hero_01');
+  assert.equal(hero03.fields[0].Fields[0].FieldID, 'hero_01_eyebrow');
+  assert(hero03.template.includes('entity.hero_01_eyebrow.is_valid'));
+  assert(hero03.template.includes('fw-bold fst-italic'));
+  assert(hero03.template.includes('font-size:18px;'));
+  assert(hero03.preview.html.includes('font-size:18px;'));
   assert.equal(hero03.bootstrapJs, false);
   assert.equal(hero03.customCss, true);
-  for (const heroId of ['hero-01', 'hero-03']) {
-    const heroComponent = components.find((component) => component.id === heroId);
-    assert(heroComponent.template.includes('srcset='));
-    assert(heroComponent.template.includes("preset:'800x450-crop webp'"));
-    assert(heroComponent.template.includes("preset:'1200x675-crop webp'"));
-    assert(heroComponent.template.includes("preset:'1920x1080-crop webp'"));
-  }
+  assert(hero03.template.includes('srcset='));
+  assert(hero03.template.includes("preset:'800x450-crop webp'"));
+  assert(hero03.template.includes("preset:'1200x675-crop webp'"));
+  assert(hero03.template.includes("preset:'1920x1080-crop webp'"));
   assert.match(hero03.template, /linear-gradient\(130deg/);
   assert(hero03.template.includes('rgba(10, 10, 10, .68) 0%'));
   assert(hero03.template.includes('rgba(10, 10, 10, .38) 65%'));
@@ -755,7 +751,7 @@ const { pathToFileURL } = require('node:url');
   assert(components.find(c => c.id === 'banner-01').template.includes('entity.banner_01_show_image.on'));
   const titleBackgroundBanner = components.find((component) => component.id === 'banner-05');
   assert(titleBackgroundBanner);
-  assert.equal(titleBackgroundBanner.category, 'banner');
+  assert.equal(titleBackgroundBanner.category, 'hero');
   assert.equal(titleBackgroundBanner.customCss, true);
   assert.equal(titleBackgroundBanner.customJs, false);
   assert(titleBackgroundBanner.template.includes('entity.banner_05_background_image preset:"1920x600-crop webp"'));
@@ -763,6 +759,7 @@ const { pathToFileURL } = require('node:url');
   assert(titleBackgroundBanner.template.includes('class="container py-2"'));
   assert(titleBackgroundBanner.template.includes('position-relative w-100 px-3 py-5'));
   const fullWidthBanner = components.find((component) => component.id === 'banner-06');
+  assert.equal(fullWidthBanner.category, 'hero');
   assert(fullWidthBanner);
   assert.equal(fullWidthBanner.customCss, true);
   assert(fullWidthBanner.template.includes('banner-06--{{ entity.banner_06_height.value | classname }}'));
@@ -774,5 +771,104 @@ const { pathToFileURL } = require('node:url');
   assert.doesNotMatch(logoCarousel.template, /{%-?\s*(?:id|var)\b|\bid=/, 'banner-04 should use classes rather than generated Liquid IDs or vars');
   assert(logoCarousel.template.includes('logo-carousel--custom-image'));
   assert(logoCarousel.template.includes('filter: grayscale(1)'));
+
+  const page = (key, ids) => ({
+    key,
+    label: key,
+    blocks: ids.map((id, index) => ({ id, uid: `${key}-${index}` })),
+  });
+  const themeImport = createThemeMarketpathImport({
+    pages: [
+      page('home', ['hero-02', 'cta-01']),
+      page('generic', ['content-01', 'cta-01']),
+      page('about', ['content-01', 'cta-01']),
+      page('contact', ['contact-main']),
+      page('error', ['error-404', 'cta-01']),
+      page('services', ['services-01', 'cta-01']),
+      page('inside-services', ['services-individual-01', 'cta-01']),
+      page('projects', ['projects-01', 'cta-01']),
+      page('inside-projects', ['project-detail-01', 'cta-01']),
+      page('blog', ['blog-01', 'cta-01']),
+      page('testimonials', ['testimonials-02', 'cta-01']),
+      page('team', ['team-01', 'cta-01']),
+      page('thankyou', ['thank-you-01', 'cta-01']),
+      page('gallery', ['gallery-01', 'cta-01']),
+      page('faqs', ['faq-01', 'cta-01']),
+    ],
+    headerId: 'header-01',
+    footerId: 'footer-01',
+    components,
+    datastores,
+    siteDomain: 'example.com',
+    imageName: 'placeholder.jpg',
+  });
+  const importedTemplateNames = new Set(themeImport.Template.map((template) => template.Name));
+  assert(themeImport.Template.some((template) => template.Name === '/_header.liquid' && template.Type === 'partial'));
+  assert(themeImport.Template.some((template) => template.Name === '/_footer.liquid' && template.Type === 'partial'));
+  for (const template of themeImport.Template) {
+    for (const match of template.Markup.matchAll(/\{%-?\s*include\s+["']([^"']+)["']/g)) {
+      assert(importedTemplateNames.has(match[1]), `${template.Name}: include ${match[1]} is missing from the import`);
+    }
+    assert(!JSON.stringify(template.Fields || []).includes('WRITE HERE YOUR'), `${template.Name}: datastore placeholder was not resolved`);
+  }
+  for (const article of themeImport.Article) assert(importedTemplateNames.has(article.TemplateGUID), `${article.Name}: page template missing`);
+  for (const item of themeImport.DatastoreItem.filter((entry) => entry.TemplateGUID)) {
+    assert(importedTemplateNames.has(item.TemplateGUID), `${item.Name}: entity template missing`);
+  }
+  assert.equal(themeImport.Image.length, 1);
+  assert.deepEqual(themeImport.Image[0], {
+    Name: 'placeholder.jpg',
+    Title: 'Example placeholder',
+    Alt: 'Example image placeholder',
+    Attribution: '',
+    FileGUID: 'image/placeholder.jpg',
+    Tags: ['Interior', 'Exterior'],
+  });
+  assert(themeImport.ImagePreset.length > 0);
+  assert(themeImport.Datastore.some((datastore) => datastore.Name === 'Page Settings'));
+  for (const datastore of themeImport.Datastore) {
+    assert(datastore.BrowserTitle, `${datastore.Name}: BrowserTitle is required by the import schema`);
+    assert.equal(typeof datastore.MetaDescription, 'string');
+    assert.equal(typeof datastore.IncludeInSearch, 'boolean');
+  }
+  assert(themeImport.Datastore.some((datastore) => datastore.Name === 'Services' && datastore.TemplateGUID === '/pages/_services.liquid'));
+  assert.equal(themeImport.Datastore.find((datastore) => datastore.Name === 'Services').URL, '//example.com/services');
+  assert(themeImport.Datastore.some((datastore) => datastore.Name === 'Projects' && datastore.TemplateGUID === '/pages/_projects.liquid'));
+  assert(themeImport.DatastoreItem.some((item) => item.DatastoreGUID === 'Services' && item.services_image === 'placeholder.jpg' && item.TemplateGUID === '/pages/_individual_service.liquid'));
+  assert(themeImport.DatastoreItem.some((item) => item.DatastoreGUID === 'Projects' && item.project_image === 'placeholder.jpg' && item.TemplateGUID === '/pages/_individual_project.liquid'));
+  assert(themeImport.DatastoreItem.every((item) => !Object.entries(item).some(([key, value]) => /_image$/i.test(key) && value === '')));
+  assert(themeImport.Article.some((article) => article.Name === 'Contact' && article.contact_01_form === 'Example Contact Form'));
+  assert(themeImport.Form.some((form) => form.Name === 'Example Contact Form'));
+  assert(themeImport.ErrorPage.some((page) => page.SiteDomainGUID === 'example.com' && page.URL === '//example.com/404' && page.TemplateGUID === '/error_page_404.liquid' && page.BrowserTitle));
+  assert(themeImport.Blog?.some((blog) => blog.Name === 'Blog'));
+  assert(themeImport.BlogPost?.length >= 3);
+  const importedUrlTypes = new Set();
+  const collectUrlTypes = (value) => {
+    if (!value || typeof value !== 'object') return;
+    if (Array.isArray(value)) return value.forEach(collectUrlTypes);
+    if (value.UrlType) importedUrlTypes.add(value.UrlType);
+    Object.values(value).forEach(collectUrlTypes);
+  };
+  collectUrlTypes(themeImport);
+  assert.deepEqual([...importedUrlTypes].sort(), ['Custom', 'Entity']);
+  assert.throws(() => createThemeMarketpathImport({
+    pages: [page('error', ['error-404'])],
+    headerId: 'header-01',
+    footerId: 'footer-01',
+    components,
+    datastores,
+  }), /site domain/i);
+  const contactArticle = themeImport.Article.find((article) => article.Name === 'Contact');
+  assert(contactArticle && !Object.hasOwn(contactArticle, 'cta_datastore_item'), 'Contact should not get the default CTA');
+  assert(themeImport.Article.some((article) => article.Name === 'Home' && article.cta_datastore_item === 'Example Call to Action'));
+  assert(themeImport.Article.some((article) => article.Name === 'Generic Page' && article.URL === '//example.com/generic-page' && article.TemplateGUID === '/pages/_generic_page.liquid'));
+  assert(themeImport.Article.some((article) => article.Name === 'About' && article.URL === '//example.com/about' && article.TemplateGUID === '/pages/_about.liquid'));
+  const placeholderPath = path.join(root, 'public', 'placeholder.jpg');
+  assert(fs.existsSync(placeholderPath), 'theme export placeholder image is missing');
+  const importZip = createThemeImportZip({ packageData: themeImport, placeholderImage: fs.readFileSync(placeholderPath) });
+  const archiveFiles = unzipSync(importZip);
+  assert.deepEqual(Object.keys(archiveFiles).sort(), ['ALL.json', 'image/placeholder.jpg']);
+  assert.deepEqual(JSON.parse(strFromU8(archiveFiles['ALL.json'])), themeImport);
+  assert.deepEqual(Buffer.from(archiveFiles['image/placeholder.jpg']), fs.readFileSync(placeholderPath));
   console.log(`PASS: ${components.length} components, ${total} unique fields; schemas, guarded references, URL escaping, Liquid block balance, previews and accordion targets.`);
 })().catch((error) => { console.error(error); process.exit(1); });

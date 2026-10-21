@@ -2,7 +2,7 @@ import { testimonialFields } from '../shared-fields.js';
 
 export default {
   id: 'testimonials-03',
-  name: 'Client Story with Image',
+  name: 'Testimonials Client Story with Image',
   category: 'testimonials',
   prefix: 'testimonials_',
   sharedFieldsId: 'testimonials',
@@ -95,26 +95,7 @@ export default {
       </div>
       <div class="col-12 col-lg-6">
         <div class="ratio ratio-1x1 overflow-hidden rounded-3" role="img" aria-label="Illustration of a home improvement project">
-          <svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <rect width="600" height="600" fill="#dce9e5"/>
-            <rect x="48" y="32" width="552" height="365" fill="#778b84"/>
-            <path d="M48 95h552M48 145h552M48 195h552M48 245h552M48 295h552M48 345h552" stroke="#91a49c" stroke-width="8"/>
-            <rect x="332" y="62" width="206" height="156" rx="3" fill="#d7e7ec" stroke="#f5f2e9" stroke-width="12"/>
-            <path d="M435 68v144M338 140h194" stroke="#f5f2e9" stroke-width="8"/>
-            <rect y="397" width="600" height="203" fill="#9b7659"/>
-            <path d="M0 438h600M0 488h600M0 538h600M0 588h600" stroke="#bd9875" stroke-width="5"/>
-            <path d="M0 470h600M0 520h600M0 570h600" stroke="#795a45" stroke-width="2"/>
-            <path d="M0 370h600v34H0z" fill="#d3c1a5"/>
-            <circle cx="174" cy="267" r="25" fill="#bd8d65"/>
-            <path d="M148 264q25-46 52 0" fill="#28343a"/>
-            <path d="M154 296l-20 88h92l-22-88z" fill="#356b61"/>
-            <path d="M156 316l-54 67m101-63 65 44" fill="none" stroke="#bd8d65" stroke-width="16" stroke-linecap="round"/>
-            <path d="M160 383l-24 76m62-76 28 76" fill="none" stroke="#25383a" stroke-width="18" stroke-linecap="round"/>
-            <rect x="405" y="319" width="95" height="63" rx="9" fill="#d8d7c8" stroke="#565c58" stroke-width="6"/>
-            <circle cx="430" cy="384" r="12" fill="#303a3b"/><circle cx="480" cy="384" r="12" fill="#303a3b"/>
-            <path d="M410 336h82" stroke="#a8aa9f" stroke-width="8"/>
-            <path d="M405 365c-75 35 18 54-40 86s-40 43-18 66" fill="none" stroke="#202c2d" stroke-width="9"/>
-          </svg>
+          <img src="sample-image:home" class="w-100 h-100 object-fit-cover" alt="Example client project">
         </div>
       </div>
     </div>

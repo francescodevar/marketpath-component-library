@@ -2,7 +2,7 @@ import { createFooterTheme } from '../../../lib/footer-theme.js';
 
 export default {
   id: 'footer-03',
-  name: 'Information & Contact Footer',
+  name: 'Footer Information and Contact',
   category: 'footer',
   prefix: 'footer_03_',
   bootstrap: true,

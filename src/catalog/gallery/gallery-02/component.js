@@ -2,7 +2,7 @@ import { galleryFields } from '../shared-fields.js';
 
 export default {
   id: 'gallery-02',
-  name: 'Masonry Project Gallery',
+  name: 'Gallery Masonry Project Grid',
   category: 'gallery',
   prefix: 'gallery_',
   sharedFieldsId: 'gallery',
@@ -427,12 +427,12 @@ document.addEventListener('DOMContentLoaded', function() {
     <div class="container py-2">
       <div class="gallery-modern-preview-head"><div><p class="gallery-modern-preview-kicker">A closer look</p><h2 class="gallery-modern-preview-title">Spaces &amp; details</h2></div><nav class="gallery-modern-preview-filters" aria-label="Filter gallery images"><button class="gallery-modern-preview-filter" type="button" aria-pressed="false">All</button><button class="gallery-modern-preview-filter active" type="button" aria-pressed="true">Interior</button><button class="gallery-modern-preview-filter" type="button" aria-pressed="false">Exterior</button></nav></div>
       <div class="gallery-modern-preview-grid">
-        <figure class="gallery-modern-preview-card"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 1050'%3E%3Crect width='800' height='1050' fill='%23dbe6ee'/%3E%3Cpath d='M0 840 200 520 400 730 610 370 800 790v260H0z' fill='%2397aebc'/%3E%3C/svg%3E" alt="Bright living room"><figcaption class="gallery-modern-preview-caption">Bright living room</figcaption></figure>
-        <figure class="gallery-modern-preview-card"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='800' height='600' fill='%23e4e6dc'/%3E%3Cpath d='M0 500 200 300 400 420 610 210 800 440v160H0z' fill='%2399a891'/%3E%3C/svg%3E" alt="Outdoor gathering space"><figcaption class="gallery-modern-preview-caption">Outdoor gathering space</figcaption></figure>
-        <figure class="gallery-modern-preview-card"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 1180'%3E%3Crect width='800' height='1180' fill='%23ebe2d8'/%3E%3Cpath d='M0 940 240 520 430 780 620 340 800 800v380H0z' fill='%23c2a98f'/%3E%3C/svg%3E" alt="Warm interior detail"><figcaption class="gallery-modern-preview-caption">Warm interior detail</figcaption></figure>
-        <figure class="gallery-modern-preview-card"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 800'%3E%3Crect width='800' height='800' fill='%23d9e1e5'/%3E%3Cpath d='M0 640 180 390 390 560 570 240 800 600v200H0z' fill='%238da3ad'/%3E%3C/svg%3E" alt="Quiet architectural detail"><figcaption class="gallery-modern-preview-caption">Quiet architectural detail</figcaption></figure>
-        <figure class="gallery-modern-preview-card"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 540'%3E%3Crect width='800' height='540' fill='%23e8dfc9'/%3E%3Cpath d='M0 450 210 270 420 380 600 190 800 400v140H0z' fill='%23b3a37e'/%3E%3C/svg%3E" alt="Sunlit reading corner"><figcaption class="gallery-modern-preview-caption">Sunlit reading corner</figcaption></figure>
-        <figure class="gallery-modern-preview-card"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 960'%3E%3Crect width='800' height='960' fill='%23dfe8e2'/%3E%3Cpath d='M0 770 230 480 440 660 640 320 800 720v240H0z' fill='%238fae9c'/%3E%3C/svg%3E" alt="Garden path detail"><figcaption class="gallery-modern-preview-caption">Garden path detail</figcaption></figure>
+        <figure class="gallery-modern-preview-card"><img src="sample-image:modern" alt="Bright living room"><figcaption class="gallery-modern-preview-caption">Bright living room</figcaption></figure>
+        <figure class="gallery-modern-preview-card"><img src="sample-image:exterior" alt="Outdoor gathering space"><figcaption class="gallery-modern-preview-caption">Outdoor gathering space</figcaption></figure>
+        <figure class="gallery-modern-preview-card"><img src="sample-image:home" alt="Warm interior detail"><figcaption class="gallery-modern-preview-caption">Warm interior detail</figcaption></figure>
+        <figure class="gallery-modern-preview-card"><img src="sample-image:modern" alt="Quiet architectural detail"><figcaption class="gallery-modern-preview-caption">Quiet architectural detail</figcaption></figure>
+        <figure class="gallery-modern-preview-card"><img src="sample-image:home" alt="Sunlit reading corner"><figcaption class="gallery-modern-preview-caption">Sunlit reading corner</figcaption></figure>
+        <figure class="gallery-modern-preview-card"><img src="sample-image:exterior" alt="Garden path detail"><figcaption class="gallery-modern-preview-caption">Garden path detail</figcaption></figure>
       </div>
     </div>
   </section>

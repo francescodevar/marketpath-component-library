@@ -1,6 +1,6 @@
 export default {
   id: 'header-02',
-  name: 'Contact Strip & Collapse Header',
+  name: 'Header Contact Strip with Collapsible Navigation',
   category: 'header',
   prefix: 'header_02_',
   bootstrap: true,
@@ -31,7 +31,7 @@ export default {
     <meta property="og:url" content="{{ entity.full_url }}" />
   </head>
   <body>
-    {%- datastore_items var siteDS = datastore:'89f2db88-94bd-4a59-bcf0-a231e4d7f9df' limit:1 sort_direction:'asc' -%}
+    {%- datastore_items var siteDS = datastore:'Page Settings' limit:1 sort_direction:'asc' -%}
     {%- assign settings = siteDS.fetched[0].data -%}
     {%- unless minimal_header_and_footer_content -%}
     {% comment %}
@@ -140,7 +140,7 @@ export default {
   fields: [],
   notes: [
     'The Template panel contains the complete MPSS1 header scaffold, Settings datastore lookup, navbar markup, and inline hover CSS as one copyable block. It opens <main> after the navigation; the site footer closes it. A sticky-top wrapper keeps both header rows fixed together while scrolling.',
-    'The Page Settings datastore schema and its GUID are available in View Datastore. The top strip uses company_email, header_cta_text_title/header_cta_link, and the company_social_media fieldset.',
+    'The header loads the shared Page Settings datastore by name. The top strip uses company_email, header_cta_text_title/header_cta_link, and the company_social_media fieldset.',
     'The top contact strip is hidden below the Bootstrap lg breakpoint. The header uses the Marketpath img tag for logo_image and the selected main_menu, and reveals dropdown menus on hover at desktop widths.',
     'The logo keeps its intrinsic aspect ratio and is capped at 64px high to fit the navbar without stretching.',
     'Bootstrap Icons CSS must be available for the contact, social, and search icons. The Bootstrap bundle is loaded by the MPSS1 scaffold for collapse and dropdown behavior.',

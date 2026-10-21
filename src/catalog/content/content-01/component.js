@@ -1,6 +1,6 @@
 export default {
   id: 'content-01',
-  name: 'Text + Image',
+  name: 'Content Text and Image Columns',
   category: 'content',
   prefix: 'content_01_',
   customCss: false,
@@ -141,7 +141,7 @@ export default {
   <div class="container py-lg-5">
     <div class="row g-5 align-items-center">
       <div class="col-lg"><p class="small text-uppercase text-primary fw-semibold mb-3">MADE WITH PURPOSE</p><h2 class="display-5 fw-bold mb-0">A little detail. A big difference.</h2><p class="lead text-secondary mt-4 mb-0">We believe the best spaces bring people together. From the first conversation to the final finish, we make every detail count.</p><a class="btn btn-primary mt-4" href="#">Our approach</a></div>
-      <div class="col-lg-6"><div class="ratio ratio-4x3"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjkwMCIgdmlld0JveD0iMCAwIDEyMDAgOTAwIj48cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI5MDAiIGZpbGw9IiNlNWU5ZWUiLz48Y2lyY2xlIGN4PSI4MjUiIGN5PSIyNzAiIHI9Ijg1IiBmaWxsPSIjZDBkN2UwIi8+PHBhdGggZD0iTTAgOTAwVjc3MEwzNjAgMzkwIDY3MCA3MzAgODU1IDUzNSAxMjAwIDg3NVY5MDAiIGZpbGw9IiNjY2Q0ZGUiLz48cGF0aCBkPSJNMCA5MDBMMzYwIDUxMCA3MDAgOTAwIiBmaWxsPSIjYmRjOGQ1Ii8+PC9zdmc+" class="w-100 h-100 object-fit-cover rounded" alt="Sample image placeholder"></div></div>
+      <div class="col-lg-6"><div class="ratio ratio-4x3"><img src="sample-image:modern" class="w-100 h-100 object-fit-cover rounded" alt="Sample image placeholder"></div></div>
     </div>
   </div>
 </section>`,

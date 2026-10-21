@@ -1,0 +1,134 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { components } from '../data/components.js';
+
+const benefits = [
+  { title: 'Start further ahead', text: 'Choose a proven layout and spend more time shaping the content, details, and personality of your website.', icon: 'M13 2 4 14h7l-1 8 10-12h-7l1-8Z' },
+  { title: 'Keep everything connected', text: 'Page Fields and shared datastores give your content a consistent structure across sections and visual variants.', icon: 'M8 3H3v5h5V3Zm13 0h-5v5h5V3ZM8 16H3v5h5v-5Zm13 0h-5v5h5v-5ZM8 5.5h8M5.5 8v8M18.5 8v8M8 18.5h8' },
+  { title: 'Make it your own', text: 'Bootstrap 5.3 and readable Liquid templates give you a familiar foundation to adapt to your brand and project.', icon: 'm14 5 5 5M4 20l4-1L21 6a2.1 2.1 0 0 0-3-3L5 16l-1 4Z' },
+  { title: 'Reuse what works', text: 'Bring the same components into your next Marketpath project, with a clear content structure and a repeatable workflow.', icon: 'M20 7h-9a6 6 0 0 0 0 12h2M16 3l4 4-4 4M4 17h9a6 6 0 0 0 0-12h-2M8 21l-4-4 4-4' },
+];
+const steps = [
+  { title: 'Find your layout', text: 'Browse the collection by category or search for a section. Open a component to explore its preview at desktop, tablet, and mobile sizes.', link: '/', label: 'Explore the collection' },
+  { title: 'See the bigger picture', text: 'Use the Playground to combine sections, try a theme, and see how headers, content, and footers work together on a page.', link: '/playground/', label: 'Open the Playground' },
+  { title: 'Make it yours', text: 'Copy the Liquid template and Page Fields into Marketpath CMS. Connect any referenced datastores, configure image presets, and follow the component’s implementation notes.', link: 'https://help.marketpath.com/', label: 'Read the documentation' },
+];
+---
+
+<Layout title="About | Marketpath Components" description="A reusable collection of Bootstrap layouts, Liquid templates, and content fields to help you build with Marketpath CMS.">
+  <a class="skip-link" href="#about">Skip to content</a>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Marketpath Components home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>Marketpath <strong>Components</strong></span></a>
+    <nav class="header-links" aria-label="Resources"><span class="version">LIBRARY / 1.0</span><a href="/about/" aria-current="page">About</a><a class="playground-link" href="/playground/">Playground <span aria-hidden="true">↗</span></a><a href="https://help.marketpath.com/" target="_blank" rel="noopener">Documentation ↗</a></nav>
+  </header>
+  <main id="about" class="about">
+    <section class="about-hero" aria-labelledby="aboutTitle">
+      <div class="hero-copy">
+        <p class="about-label"><span></span> THE IDEA BEHIND THE LIBRARY</p>
+        <h1 id="aboutTitle">Wireframe<br><em>Collection.</em></h1>
+        <p class="hero-lead">A thoughtful head start for your next website.</p>
+        <p class="hero-description">Reusable Bootstrap sections for Marketpath CMS. Explore layouts, bring your content into focus, and build on a foundation you can use again and again.</p>
+        <div class="about-actions"><a class="about-button" href="/">Browse components <span aria-hidden="true">↗</span></a><a class="about-text-link" href="#how-it-works">See how it works <span aria-hidden="true">↓</span></a></div>
+      </div>
+      <div class="blueprint" aria-label="A page assembled from reusable header, hero, content, and footer sections">
+        <div class="blueprint-heading"><span>ONE PAGE. MANY POSSIBILITIES.</span><span aria-hidden="true">↗</span></div>
+        <div class="page-diagram">
+          <div class="diagram-header"><span class="diagram-logo" aria-hidden="true"></span><span>Header</span><div aria-hidden="true"><i></i><i></i><i></i></div></div>
+          <div class="diagram-hero"><span class="diagram-tag">01 / HERO</span><strong>Your next<br>great idea.</strong><span class="diagram-line" aria-hidden="true"></span><span class="diagram-cta" aria-hidden="true"></span><span class="diagram-shape" aria-hidden="true"></span></div>
+          <div class="diagram-content"><span class="diagram-tag">02 / CONTENT</span><div class="diagram-cards" aria-hidden="true">{[1, 2, 3].map(() => <div><span></span><i></i><i></i></div>)}</div></div>
+          <div class="diagram-footer"><span>Footer</span><span aria-hidden="true">＋</span></div>
+        </div>
+        <div class="blueprint-caption"><span><b>{components.length}</b> components to build with</span><span>YOURS TO CUSTOMIZE</span></div>
+      </div>
+    </section>
+
+    <section class="about-benefits" aria-labelledby="benefitsTitle">
+      <div class="section-heading"><p class="about-label">BUILT TO BE USEFUL</p><h2 id="benefitsTitle">More room for the work<br>that makes a website yours.</h2></div>
+      <div class="benefit-grid">{benefits.map((benefit) => <article class="benefit"><span class="benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={benefit.icon}/></svg></span><h3>{benefit.title}</h3><p>{benefit.text}</p></article>)}</div>
+    </section>
+
+    <section class="about-purpose" aria-labelledby="purposeTitle">
+      <div><p class="about-label">THE PURPOSE</p><h2 id="purposeTitle">Build once.<br><em>Keep building on it.</em></h2></div>
+      <div class="purpose-copy"><p>This collection brings layout, code, and content structure together. Each component pairs a visual example with its Liquid template, Page Fields, and practical implementation notes.</p><p>Use it to explore an idea, create a consistent set of pages, or carry a successful pattern into your next project. The starting point is shared. The finished website is yours.</p><div class="purpose-tools"><span>Bootstrap 5.3</span><span>Marketpath Liquid</span><span>Shared datastores</span></div></div>
+    </section>
+
+    <section id="how-it-works" class="about-workflow" aria-labelledby="workflowTitle">
+      <div class="section-heading"><p class="about-label">FROM IDEA TO IMPLEMENTATION</p><h2 id="workflowTitle">Find your layout. Copy the code.<br><em>Make it yours.</em></h2></div>
+      <ol class="workflow-grid">{steps.map((step, index) => <li><span class="step-number">0{index + 1}</span><h3>{step.title}</h3><p>{step.text}</p><a class="about-text-link" href={step.link}>{step.label} <span aria-hidden="true">↗</span></a></li>)}</ol>
+    </section>
+
+    <section class="about-invitation" aria-labelledby="invitationTitle"><div><p class="about-label">YOUR NEXT PROJECT STARTS HERE</p><h2 id="invitationTitle">Give your ideas a starting point.</h2></div><a class="about-button" href="/">Explore the collection <span aria-hidden="true">↗</span></a></section>
+    <footer class="about-footer"><span>Marketpath / Component library</span><a href="/">Back to the collection <span aria-hidden="true">↑</span></a></footer>
+  </main>
+</Layout>
+
+<style>
+  .about { max-width:1440px; margin:auto; padding:0 clamp(24px,5vw,80px); }
+  .about :where(h1,h2,h3,p) { margin:0; }
+  .about-label { font:600 10px/1.5 ui-monospace,monospace; letter-spacing:1.6px; color:var(--accent); }
+  .about-label>span { display:inline-block; width:6px; height:6px; background:currentColor; margin-right:9px; }
+  .about-hero { display:grid; grid-template-columns:1.1fr 1fr; gap:clamp(40px,7vw,100px); align-items:center; padding:80px 0 90px; }
+  .about h1 { margin:22px 0; font:500 clamp(56px,6.2vw,88px)/.97 Georgia,'Times New Roman',serif; letter-spacing:-4px; }
+  .about h1 em { font-weight:400; color:var(--accent); }
+  .hero-lead { font-size:20px; line-height:1.5; letter-spacing:-.5px; }
+  .hero-description { max-width:450px; margin-top:14px!important; font-size:15px; line-height:1.85; color:#667080; }
+  .about-actions { display:flex; align-items:center; flex-wrap:wrap; gap:24px; margin-top:30px; }
+  .about-button { display:inline-flex; align-items:center; justify-content:space-between; gap:30px; padding:15px 19px; border:1px solid var(--accent); border-radius:5px; background:var(--accent); color:white; font-size:12px; font-weight:600; transition:background .2s,transform .2s; }
+  .about-button:hover { background:#a94105; transform:translateY(-2px); }
+  .about-text-link { display:inline-flex; align-items:center; gap:12px; font-size:12px; font-weight:600; }
+  .about-text-link:hover { color:var(--accent); }
+  .blueprint { padding:24px; border:1px solid #f0d5bf; border-radius:8px; background-color:#fff8f2; background-image:linear-gradient(#c6530c09 1px,transparent 1px),linear-gradient(90deg,#c6530c09 1px,transparent 1px); background-size:20px 20px; transform:rotate(2deg); }
+  .blueprint-heading { display:flex; justify-content:space-between; margin-bottom:20px; font:9px ui-monospace,monospace; color:#65738b; letter-spacing:1px; }
+  .page-diagram { background:#fff; border:1px solid #ead9ca; box-shadow:0 16px 30px #6041230c; }
+  .diagram-header { display:flex; align-items:center; gap:8px; padding:16px; border-bottom:1px solid #eee3d9; font-size:10px; }
+  .diagram-logo { width:13px; height:13px; background:var(--accent); border-radius:3px; }
+  .diagram-header>div { display:flex; gap:8px; margin-left:auto; }
+  .diagram-header i { width:22px; height:3px; background:#e8ddd4; }
+  .diagram-hero { position:relative; overflow:hidden; padding:25px; background:#fff0e3; }
+  .diagram-tag { display:block; position:relative; z-index:1; font:8px ui-monospace,monospace; color:#875a3c; letter-spacing:1px; }
+  .diagram-hero strong { position:relative; z-index:1; display:block; margin-top:14px; color:#793b18; font:400 32px/1.1 Georgia,serif; letter-spacing:-1px; }
+  .diagram-line { display:block; width:38%; height:4px; background:#edc29f; margin-top:15px; }
+  .diagram-cta { display:block; width:61px; height:17px; margin-top:13px; border-radius:2px; background:var(--accent); }
+  .diagram-shape { position:absolute; right:-25px; bottom:-32px; width:190px; height:190px; border:35px solid #f6d7bd; border-radius:50%; }
+  .diagram-content { padding:22px; }
+  .diagram-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:13px; }
+  .diagram-cards>div { border:1px solid #eee3d9; padding:6px; }
+  .diagram-cards span { display:block; height:42px; background:#f6f1ec; }
+  .diagram-cards i { display:block; width:80%; height:3px; background:#e8ddd4; margin-top:8px; }
+  .diagram-cards i:last-child { width:55%; margin:5px 0 4px; }
+  .diagram-footer { display:flex; justify-content:space-between; background:#33271f; color:#fff; padding:13px 20px; font-size:9px; }
+  .blueprint-caption { display:flex; justify-content:space-between; align-items:center; gap:15px; margin-top:18px; font-size:10px; color:#647391; }
+  .blueprint-caption b { color:#243754; font-size:15px; }
+  .blueprint-caption>span:last-child { font:8px ui-monospace,monospace; letter-spacing:1px; }
+  .about-benefits { padding:60px 0 75px; border-top:1px solid var(--line); }
+  .section-heading h2 { margin-top:17px; }
+  .about h2 { font:400 clamp(30px,3.4vw,44px)/1.15 Georgia,'Times New Roman',serif; letter-spacing:-1.3px; }
+  .about h2 em { font-weight:400; }
+  .benefit-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:32px; margin-top:42px; }
+  .benefit-icon { display:grid; place-items:center; width:42px; height:42px; margin-bottom:20px; background:#fff0e4; border-radius:10px; color:var(--accent); }
+  .benefit-icon svg { width:22px; height:22px; }
+  .about h3 { font-size:16px; font-weight:600; letter-spacing:-.35px; }
+  .benefit p,.workflow-grid p { margin-top:12px; font-size:13px; line-height:1.85; color:#667080; }
+  .about-purpose { display:grid; grid-template-columns:1fr 1fr; gap:60px; padding:52px; border-radius:8px; background:#30271f; color:#fff; }
+  .about-purpose .about-label { color:#ffb47c; margin-bottom:22px; }
+  .about-purpose h2 em { color:#ffc18f; }
+  .purpose-copy p { font-size:14px; line-height:1.9; color:#d3dae7; }
+  .purpose-copy p+p { margin-top:16px; }
+  .purpose-tools { display:flex; flex-wrap:wrap; gap:8px; margin-top:24px; }
+  .purpose-tools span { border:1px solid #ffffff30; border-radius:4px; padding:6px 9px; font:9px ui-monospace,monospace; color:#d9e2f4; }
+  .about-workflow { padding:85px 0; scroll-margin-top:24px; }
+  .workflow-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:40px; padding:0; margin:40px 0 0; list-style:none; }
+  .workflow-grid li { display:flex; flex-direction:column; align-items:flex-start; border-top:1px solid #cbd4e3; padding-top:22px; }
+  .step-number { margin-bottom:24px; color:var(--accent); font:12px ui-monospace,monospace; }
+  .workflow-grid p { margin-bottom:24px; }
+  .workflow-grid a { margin-top:auto; }
+  .about-invitation { display:flex; align-items:center; justify-content:space-between; gap:30px; padding:35px 0 45px; border-top:1px solid var(--line); }
+  .about-invitation h2 { font-size:32px; margin-top:10px; }
+  .about-invitation .about-button { flex-shrink:0; }
+  .about-footer { display:flex; justify-content:space-between; gap:20px; padding:25px 0 35px; border-top:1px solid var(--line); color:#747e8d; font-size:10px; }
+  @media(max-width:1000px) { .about-hero { gap:40px; } .about h1 { font-size:65px; } .benefit-grid { grid-template-columns:repeat(2,1fr); gap:32px 40px; } .about-purpose { padding:35px; gap:35px; } }
+  @media(max-width:700px) { .about-hero { grid-template-columns:1fr; padding:44px 0 55px; gap:40px; } .about h1 { font-size:64px; letter-spacing:-3px; } .blueprint { max-width:450px; width:100%; margin:auto; transform:none; } .hero-description { max-width:100%; } .about-benefits { padding:42px 0; } .about-purpose { grid-template-columns:1fr; gap:25px; padding:30px 24px; } .about-workflow { padding:55px 0; } .workflow-grid { grid-template-columns:1fr; gap:30px; } .step-number { margin-bottom:15px; } .about-invitation { align-items:flex-start; flex-direction:column; } }
+  @media(max-width:400px) { .benefit-grid { grid-template-columns:1fr; } .about-actions { gap:20px; } .blueprint { padding:16px; } .blueprint-caption>span:last-child { display:none; } }
+  @media(max-width:600px) { .topbar { height:auto; min-height:72px; flex-wrap:wrap; gap:18px; padding-top:18px; padding-bottom:18px; } .header-links { width:100%; flex-wrap:wrap; gap:22px; } }
+  @media(prefers-reduced-motion:reduce) { .about-button { transition:none; } }
+</style>

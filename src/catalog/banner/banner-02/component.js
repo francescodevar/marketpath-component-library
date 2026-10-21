@@ -1,6 +1,6 @@
 export default {
   "id": "banner-02",
-  "name": "Experience & Contact Banner",
+  "name": "Banner Experience and Contact",
   "category": "banner",
   "prefix": "banner_02_",
   "bootstrap": true,

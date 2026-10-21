@@ -2,7 +2,7 @@ import { callToActionFields } from '../shared-fields.js';
 
 export default {
   id: 'cta-01',
-  name: 'Phone & Quote CTA',
+  name: 'CTA Phone and Quote',
   category: 'cta',
   prefix: 'cta_',
   sharedFieldsId: 'cta',

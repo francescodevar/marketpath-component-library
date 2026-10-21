@@ -2,7 +2,7 @@ import { galleryFields } from '../shared-fields.js';
 
 export default {
   id: 'gallery-03',
-  name: 'Selectable Image Gallery',
+  name: 'Gallery Selectable Images',
   category: 'gallery',
   prefix: 'gallery_',
   sharedFieldsId: 'gallery',
@@ -294,17 +294,17 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="gallery-selection-preview-head"><div><p class="gallery-selection-preview-kicker">Image collection</p><h2 class="gallery-selection-preview-title">Spaces &amp; details</h2></div><nav class="gallery-selection-preview-filters" aria-label="Filter gallery images"><button class="gallery-selection-preview-filter" type="button" aria-pressed="false">All</button><button class="gallery-selection-preview-filter active" type="button" aria-pressed="true">Interior</button><button class="gallery-selection-preview-filter" type="button" aria-pressed="false">Exterior</button></nav></div>
       <div class="gallery-selection-preview-grid">
         <input class="gallery-selection-preview-radio" type="radio" name="gallery03-preview" id="gallery03-preview-1" checked>
-        <label class="gallery-selection-preview-thumb" for="gallery03-preview-1" aria-label="Show bright living room"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 1050'%3E%3Crect width='800' height='1050' fill='%23dbe6ee'/%3E%3Cpath d='M0 840 200 520 400 730 610 370 800 790v260H0z' fill='%2397aebc'/%3E%3C/svg%3E" alt=""></label>
-        <img class="gallery-selection-preview-main" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 1050'%3E%3Crect width='800' height='1050' fill='%23dbe6ee'/%3E%3Cpath d='M0 840 200 520 400 730 610 370 800 790v260H0z' fill='%2397aebc'/%3E%3C/svg%3E" alt="Bright living room">
+        <label class="gallery-selection-preview-thumb" for="gallery03-preview-1" aria-label="Show bright living room"><img src="sample-image:modern" alt=""></label>
+        <img class="gallery-selection-preview-main" src="sample-image:modern" alt="Bright living room">
         <input class="gallery-selection-preview-radio" type="radio" name="gallery03-preview" id="gallery03-preview-2">
-        <label class="gallery-selection-preview-thumb" for="gallery03-preview-2" aria-label="Show outdoor gathering space"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='800' height='600' fill='%23e4e6dc'/%3E%3Cpath d='M0 500 200 300 400 420 610 210 800 440v160H0z' fill='%2399a891'/%3E%3C/svg%3E" alt=""></label>
-        <img class="gallery-selection-preview-main" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='800' height='600' fill='%23e4e6dc'/%3E%3Cpath d='M0 500 200 300 400 420 610 210 800 440v160H0z' fill='%2399a891'/%3E%3C/svg%3E" alt="Outdoor gathering space">
+        <label class="gallery-selection-preview-thumb" for="gallery03-preview-2" aria-label="Show outdoor gathering space"><img src="sample-image:exterior" alt=""></label>
+        <img class="gallery-selection-preview-main" src="sample-image:exterior" alt="Outdoor gathering space">
         <input class="gallery-selection-preview-radio" type="radio" name="gallery03-preview" id="gallery03-preview-3">
-        <label class="gallery-selection-preview-thumb" for="gallery03-preview-3" aria-label="Show warm interior detail"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 1180'%3E%3Crect width='800' height='1180' fill='%23ebe2d8'/%3E%3Cpath d='M0 940 240 520 430 780 620 340 800 800v380H0z' fill='%23c2a98f'/%3E%3C/svg%3E" alt=""></label>
-        <img class="gallery-selection-preview-main" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 1180'%3E%3Crect width='800' height='1180' fill='%23ebe2d8'/%3E%3Cpath d='M0 940 240 520 430 780 620 340 800 800v380H0z' fill='%23c2a98f'/%3E%3C/svg%3E" alt="Warm interior detail">
+        <label class="gallery-selection-preview-thumb" for="gallery03-preview-3" aria-label="Show warm interior detail"><img src="sample-image:home" alt=""></label>
+        <img class="gallery-selection-preview-main" src="sample-image:home" alt="Warm interior detail">
         <input class="gallery-selection-preview-radio" type="radio" name="gallery03-preview" id="gallery03-preview-4">
-        <label class="gallery-selection-preview-thumb" for="gallery03-preview-4" aria-label="Show quiet architectural detail"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 800'%3E%3Crect width='800' height='800' fill='%23d9e1e5'/%3E%3Cpath d='M0 640 180 390 390 560 570 240 800 600v200H0z' fill='%238da3ad'/%3E%3C/svg%3E" alt=""></label>
-        <img class="gallery-selection-preview-main" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 800'%3E%3Crect width='800' height='800' fill='%23d9e1e5'/%3E%3Cpath d='M0 640 180 390 390 560 570 240 800 600v200H0z' fill='%238da3ad'/%3E%3C/svg%3E" alt="Quiet architectural detail">
+        <label class="gallery-selection-preview-thumb" for="gallery03-preview-4" aria-label="Show quiet architectural detail"><img src="sample-image:modern" alt=""></label>
+        <img class="gallery-selection-preview-main" src="sample-image:modern" alt="Quiet architectural detail">
       </div>
     </div>
   </section>

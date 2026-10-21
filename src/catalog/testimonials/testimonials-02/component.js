@@ -2,7 +2,7 @@ import { testimonialFields } from '../shared-fields.js';
 
 export default {
   id: 'testimonials-02',
-  name: 'Google Review Cards',
+  name: 'Testimonials Google Review Cards',
   category: 'testimonials',
   prefix: 'testimonials_',
   sharedFieldsId: 'testimonials',

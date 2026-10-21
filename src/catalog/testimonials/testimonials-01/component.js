@@ -2,7 +2,7 @@ import { testimonialFields } from '../shared-fields.js';
 
 export default {
   id: 'testimonials-01',
-  name: 'Testimonial Card Swiper',
+  name: 'Testimonials Review Card Carousel',
   category: 'testimonials',
   prefix: 'testimonials_',
   sharedFieldsId: 'testimonials',

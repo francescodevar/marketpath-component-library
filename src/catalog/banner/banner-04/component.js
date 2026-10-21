@@ -1,6 +1,6 @@
 export default {
   id: 'banner-04',
-  name: 'Logo Carousel',
+  name: 'Banner Logo Carousel',
   category: 'banner',
   prefix: 'banner_04_',
   bootstrap: true,

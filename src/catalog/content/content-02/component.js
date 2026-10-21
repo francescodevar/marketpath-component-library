@@ -1,6 +1,6 @@
 export default {
   id: 'content-02',
-  name: 'Text + Rich HTML',
+  name: 'Content Title Text with Two Columns',
   category: 'content',
   prefix: 'content_02_',
   customCss: false,
@@ -154,7 +154,7 @@ export default {
   <div class="container py-2">
     <div class="row"><div class="col-12 col-lg-9 mx-auto text-center"><h2 class="pb-5 lh-1 display-3 text-center"><span class="text-primary">Example </span> Window &amp; Door</h2></div></div>
     <div class="row align-items-start g-5">
-      <div class="col-12 col-lg-6"><div class="ratio ratio-4x3 shadow-sm overflow-hidden"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjkwMCIgdmlld0JveD0iMCAwIDEyMDAgOTAwIj48cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI5MDAiIGZpbGw9IiNlNWU5ZWUiLz48Y2lyY2xlIGN4PSI4MjUiIGN5PSIyNzAiIHI9Ijg1IiBmaWxsPSIjZDBkN2UwIi8+PHBhdGggZD0iTTAgOTAwVjc3MEwzNjAgMzkwIDY3MCA3MzAgODU1IDUzNSAxMjAwIDg3NVY5MDAiIGZpbGw9IiNjY2Q0ZGUiLz48cGF0aCBkPSJNMCA5MDBMMzYwIDUxMCA3MDAgOTAwIiBmaWxsPSIjYmRjOGQ1Ii8+PC9zdmc+" class="w-100 h-100 object-fit-cover" alt="Sample image placeholder" loading="lazy"></div></div>
+      <div class="col-12 col-lg-6"><div class="ratio ratio-4x3 shadow-sm overflow-hidden"><img src="sample-image:home" class="w-100 h-100 object-fit-cover" alt="Sample image placeholder" loading="lazy"></div></div>
       <div class="col-12 col-lg-6"><h3>Windows. Doors. Decks. Finished Right.</h3><p>At Example, replacing a window or door means more than removing the old and installing the new.</p><p>We look carefully at the surrounding work and take time to complete every detail.</p><a class="btn btn-primary mt-4" href="#">Learn more</a></div>
     </div>
   </div>

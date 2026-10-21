@@ -1,6 +1,6 @@
 export default {
   id: 'banner-01',
-  name: 'Page Banner',
+  name: 'Banner Interior Page Title',
   category: 'banner',
   prefix: 'banner_01_',
   customCss: false,
@@ -80,6 +80,8 @@ export default {
   ],
   preview: {
     html: `<section class="position-relative overflow-hidden bg-light py-5">
+  <img src="sample-image:modern" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover" alt="">
+  <div class="position-absolute top-0 start-0 w-100 h-100 bg-white bg-opacity-75" aria-hidden="true"></div>
   <div class="container position-relative py-lg-4">
     <h1 class="display-5 fw-bold">Room for something new.</h1>
     <p class="lead mb-0 text-secondary">Explore the possibilities. Find your next inspiration.</p>
@@ -89,7 +91,7 @@ export default {
   mockData: {
     title: 'Room for something new.',
     description: 'Explore the possibilities. Find your next inspiration.',
-    show_image: false,
+    show_image: true,
     image: '',
   },
 };

@@ -3,10 +3,11 @@ import { datastores } from '../data/datastores.js';
 import { imagePresets, imagePresetImport } from '../data/presets.js';
 import { escapeHtml, categoryLabel, previewDocument } from '../lib/utils.js';
 import { footerMarkupForTheme, footerTemplateForTheme } from '../lib/footer-theme.js';
-import { createServicesComponentImport, marketpathSlug } from '../lib/marketpath-export.js';
+import { createComponentImport, createThemeImportZip, marketpathSlug } from '../lib/marketpath-export.js';
 
 const $ = (selector) => document.querySelector(selector);
 const dialog = $('#componentDialog');
+const importDialog = $('#importDialog');
 const datastoreDialog = $('#datastoreDialog');
 const imagePresetsDialog = $('#imagePresetsDialog');
 const datastoreSelect = $('#datastoreSelect');
@@ -15,6 +16,8 @@ const grid = $('#componentGrid');
 const emptyState = $('#emptyState');
 const cards = [...grid.querySelectorAll('[data-component]')];
 let activeFilter = 'all';
+let activePage = 1;
+const pageSize = 9;
 let activeComponent;
 let previewWidth = 1200;
 let returnFocus;
@@ -22,6 +25,7 @@ let datastoreReturnFocus;
 let imagePresetsReturnFocus;
 let activeDatastore;
 let activeFooterTheme;
+let importReturnFocus;
 
 const frameObserver = new ResizeObserver((entries) => {
   for (const { target } of entries) {
@@ -34,6 +38,7 @@ const datastoreIdsFor = (component) => [...new Set([
   component.datastoreId,
   ...(component.datastoreIds || []),
   component.entityDatastoreId,
+  component.settingsDatastoreId,
 ].filter(Boolean))];
 grid.querySelectorAll('.card-preview').forEach((el) => frameObserver.observe(el));
 
@@ -48,14 +53,20 @@ document.querySelectorAll('[data-filter-group]').forEach((group) => {
 
 function renderComponents() {
   const query = search.value.trim().toLowerCase();
-  let visible = 0;
-  for (const card of cards) {
-    const match = (activeFilter === 'all' || card.dataset.category === activeFilter) && card.dataset.search.includes(query);
-    card.hidden = !match;
-    if (match) visible++;
-  }
+  const matching = cards.filter((card) => (activeFilter === 'all' || card.dataset.category === activeFilter) && card.dataset.search.includes(query));
+  const pageCount = Math.ceil(matching.length / pageSize);
+  activePage = Math.min(activePage, Math.max(pageCount, 1));
+  const first = (activePage - 1) * pageSize;
+  const pageCards = new Set(matching.slice(first, first + pageSize));
+  for (const card of cards) card.hidden = !pageCards.has(card);
+  const visible = matching.length;
   emptyState.hidden = visible !== 0;
   $('#componentCount').innerHTML = `<strong>${visible} component${visible === 1 ? '' : 's'}</strong> ${activeFilter === 'all' ? 'in the collection' : `in ${escapeHtml(categoryLabel(activeFilter))}`}`;
+  const pagination = $('#componentPagination');
+  pagination.hidden = pageCount <= 1;
+  $('#pageStatus').textContent = `Page ${activePage} of ${pageCount}`;
+  $('#previousPage').disabled = activePage === 1;
+  $('#nextPage').disabled = activePage >= pageCount;
   document.querySelectorAll('[data-filter]').forEach((button) => button.setAttribute('aria-pressed', button.dataset.filter === activeFilter));
   document.querySelectorAll('[data-filter-group]').forEach((group) => {
     const groupCategories = group.dataset.filterGroup.split(',');
@@ -133,7 +144,6 @@ function openComponent(id, tab = 'preview') {
   $('#dialogCategory').textContent = `${activeComponent.category.toUpperCase()} / ${activeComponent.id}`;
   $('#dialogDescription').textContent = activeComponent.description;
   $('#componentMeta').innerHTML = [['Component', activeComponent.id],['Field prefix', activeComponent.prefix],['Bootstrap', '5.3'],['Custom CSS', activeComponent.customCss ? 'Yes · inline' : 'No'],['Custom JS', activeComponent.customJs ? 'Yes' : 'No']].map(([label,value]) => `<div><dt>${label}</dt><dd>${escapeHtml(value)}</dd></div>`).join('');
-  $('#servicePackageActions').hidden = activeComponent.category !== 'services' || activeComponent.datastoreId !== 'services';
   $('#footerThemePicker').hidden = !activeComponent.theme;
   activeFooterTheme = activeComponent.theme?.default;
   $('#templateCode').textContent = footerTemplateForTheme(activeComponent, activeFooterTheme);
@@ -236,27 +246,89 @@ async function copyContent(kind) {
   }
 }
 
-function downloadServicesPackage(createFiles) {
-  if (!activeComponent || activeComponent.category !== 'services') return;
-  const status = $('#copyStatus');
+function updateImportOptions() {
+  const componentDatastores = datastoreIdsFor(activeComponent);
+  const needsDatastore = componentDatastores.length > 0;
+  const hasFields = Boolean(activeComponent.fields?.length);
+  const hasExamples = hasFields || componentDatastores.some((id) => id !== 'page-settings');
+  $('#importDatastoreOption').hidden = !needsDatastore;
+  $('#importDatastore').checked = needsDatastore;
+  $('#importFieldsOption').hidden = !hasFields;
+  $('#importFields').checked = hasFields;
+  $('#importExamplesOption').hidden = !hasExamples;
+  $('#importExamples').checked = hasExamples;
+  $('#importCreatePage').checked = false;
+  $('#importPagePath').value = activeComponent.entityDatastoreId === 'services' ? '/services/' : `/${marketpathSlug(activeComponent.name)}-example`;
+  $('#importPageHelp').textContent = activeComponent.entityDatastoreId === 'services'
+    ? 'Each service page uses this route followed by its service name.'
+    : 'The example page will be created on this Marketpath site.';
+  $('#importExamplesHint').textContent = needsDatastore
+    ? 'Sample text, images, and datastore items. No page is created by default.'
+    : 'Sample images. Create a page example to import text into a page.';
+  $('#importDialogDescription').textContent = `${activeComponent.name} · choose the parts to include in your Marketpath package.`;
+  $('#importStatus').textContent = '';
+  $('#importStatus').classList.remove('is-error');
+  updateImportAvailability();
+}
+
+function updateImportAvailability() {
+  const requiresDatastore = datastoreIdsFor(activeComponent).length > 0;
+  const requiresFields = Boolean(activeComponent.fields?.length);
+  $('#importExamples').disabled = requiresDatastore && !$('#importDatastore').checked;
+  if ($('#importExamples').disabled) $('#importExamples').checked = false;
+  const withExamples = $('#importExamples').checked;
+  $('#importCreatePageOption').hidden = !withExamples;
+  $('#importCreatePage').disabled = !withExamples || !$('#importTemplate').checked || (requiresFields && !$('#importFields').checked);
+  if ($('#importCreatePage').disabled) $('#importCreatePage').checked = false;
+  const withPage = withExamples && $('#importCreatePage').checked;
+  $('#importPageOptions').hidden = !withPage;
+  $('#importSiteDomain').required = withPage;
+  $('#importSiteDomain').disabled = !withPage;
+  $('#importPagePath').required = withPage;
+  $('#importPagePath').disabled = !withPage;
+}
+
+async function downloadComponentImport(event) {
+  event.preventDefault();
+  const status = $('#importStatus');
   status.classList.remove('is-error');
+  const options = {
+    includeTemplate: $('#importTemplate').checked,
+    includeFields: $('#importFields').checked,
+    includeDatastore: $('#importDatastore').checked,
+    includeExamples: $('#importExamples').checked,
+    includePageExample: $('#importCreatePage').checked,
+  };
+  if (!Object.values(options).some(Boolean)) {
+    status.classList.add('is-error');
+    status.textContent = 'Select at least one item to include.';
+    return;
+  }
   try {
-    const packageData = createServicesComponentImport({ component: activeComponent, datastores, createFiles });
-    const blob = new Blob([JSON.stringify(packageData, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
+    const packageData = createComponentImport({ component: activeComponent, datastores, siteDomain: $('#importSiteDomain').value, pagePath: $('#importPagePath').value, ...options });
+    let placeholderImage;
+    if (options.includeExamples) {
+      const response = await fetch('/placeholder.jpg');
+      if (!response.ok) throw new Error('Could not load the sample image for this package.');
+      placeholderImage = new Uint8Array(await response.arrayBuffer());
+    }
+    const archive = createThemeImportZip({ packageData, placeholderImage });
+    const url = URL.createObjectURL(new Blob([archive], { type: 'application/zip' }));
     const link = document.createElement('a');
     link.href = url;
-    link.download = `${marketpathSlug(activeComponent.id)}-${createFiles ? 'create-files' : 'empty-package'}.json`;
+    link.download = `${marketpathSlug(activeComponent.id)}-import.zip`;
     document.body.append(link);
     link.click();
     link.remove();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
-    status.textContent = createFiles
-      ? 'Downloaded package with 3 example Services and a ready-to-preview page.'
-      : 'Downloaded empty package with the template, Fields, and Services datastore.';
+    status.textContent = options.includeExamples
+      ? options.includePageExample
+        ? 'Package downloaded with example content and page routes.'
+        : 'Package downloaded with example data. No page or route was created.'
+      : 'Marketpath package downloaded.';
   } catch (error) {
     status.classList.add('is-error');
-    status.textContent = error.message || 'Could not create the Services import package.';
+    status.textContent = error.message || 'Could not create the import package.';
   }
 }
 
@@ -264,18 +336,23 @@ document.addEventListener('click', (event) => {
   const open = event.target.closest('[data-open]');
   if (open) openComponent(open.dataset.open, open.dataset.openTab || 'preview');
   const filter = event.target.closest('[data-filter]');
-  if (filter) { activeFilter = filter.dataset.filter; renderComponents(); }
-  if (event.target.closest('#resetFilters')) { search.value = ''; activeFilter = 'all'; renderComponents(); search.focus(); }
+  if (filter) { activeFilter = filter.dataset.filter; activePage = 1; renderComponents(); }
+  if (event.target.closest('#resetFilters')) { search.value = ''; activeFilter = 'all'; activePage = 1; renderComponents(); search.focus(); }
+  if (event.target.closest('#previousPage')) { activePage--; renderComponents(); }
+  if (event.target.closest('#nextPage')) { activePage++; renderComponents(); }
   const tab = event.target.closest('[data-tab]');
   if (tab) setTab(tab.dataset.tab);
+  if (event.target.closest('#openImportDialog')) {
+    importReturnFocus = document.activeElement;
+    updateImportOptions();
+    importDialog.showModal();
+  }
   const footerTheme = event.target.closest('[data-footer-theme-choice]');
   if (footerTheme) setFooterTheme(footerTheme.dataset.footerThemeChoice);
   const device = event.target.closest('[data-width]');
   if (device) { previewWidth = Number(device.dataset.width); resizePreview(); }
   const copy = event.target.closest('[data-copy]');
   if (copy) copyContent(copy.dataset.copy);
-  const servicePackage = event.target.closest('[data-service-package]');
-  if (servicePackage) downloadServicesPackage(servicePackage.dataset.servicePackage === 'create');
 });
 $('#viewDatastore')?.addEventListener('click', (event) => {
   event.preventDefault();
@@ -287,6 +364,15 @@ $('#viewPresets')?.addEventListener('click', (event) => {
 });
 $('#closeDialog').addEventListener('click', () => dialog.close());
 dialog.addEventListener('close', () => returnFocus?.focus());
+$('#closeImportDialog').addEventListener('click', () => importDialog.close());
+$('#cancelImport').addEventListener('click', () => importDialog.close());
+importDialog.addEventListener('close', () => importReturnFocus?.focus());
+$('#componentImportForm').addEventListener('submit', downloadComponentImport);
+$('#importDatastore').addEventListener('change', updateImportAvailability);
+$('#importTemplate').addEventListener('change', updateImportAvailability);
+$('#importFields').addEventListener('change', updateImportAvailability);
+$('#importExamples').addEventListener('change', updateImportAvailability);
+$('#importCreatePage').addEventListener('change', updateImportAvailability);
 $('#closeDatastoreDialog').addEventListener('click', () => datastoreDialog.close());
 datastoreDialog.addEventListener('close', () => datastoreReturnFocus?.focus());
 $('#closeImagePresetsDialog').addEventListener('click', () => imagePresetsDialog.close());
@@ -319,6 +405,6 @@ $('.detail-tabs').addEventListener('keydown', (event) => {
 document.addEventListener('keydown', (event) => {
   if (event.key === '/' && !dialog.open && !datastoreDialog.open && !event.ctrlKey && !event.metaKey && !['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) { event.preventDefault(); search.focus(); }
 });
-search.addEventListener('input', renderComponents);
+search.addEventListener('input', () => { activePage = 1; renderComponents(); });
 
 renderComponents();

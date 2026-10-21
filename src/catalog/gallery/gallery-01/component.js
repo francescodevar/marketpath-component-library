@@ -2,7 +2,7 @@ import { galleryFields } from '../shared-fields.js';
 
 export default {
   id: 'gallery-01',
-  name: 'Filterable Image Gallery',
+  name: 'Gallery Filterable Images',
   category: 'gallery',
   prefix: 'gallery_',
   sharedFieldsId: 'gallery',
@@ -33,7 +33,7 @@ export default {
             </li>
             {%- for tag in entity.gallery_filters -%}
             <li class="list-group-item border-0 bg-transparent p-0">
-              <button class="btn btn-outline-primary rounded-0 filter-btn" type="button" data-filter="{{ tag.title | downcase | replace: ' ', '-' | escape }}" aria-pressed="false">{{ tag.title }}</button>
+              <button class="btn btn-outline-primary rounded-0 filter-btn" type="button" data-filter="tag:{{ tag.name.value | url_encode | escape }}" aria-pressed="false">{{ tag.title.value | default: tag.name.value | escape }}</button>
             </li>
             {%- endfor -%}
           </ul>
@@ -42,7 +42,7 @@ export default {
             <select class="form-select rounded-0" id="galleryMobileFilter">
               <option value="all">All Categories</option>
               {%- for tag in entity.gallery_filters -%}
-              <option value="{{ tag.title | downcase | replace: ' ', '-' | escape }}">{{ tag.title }}</option>
+              <option value="tag:{{ tag.name.value | url_encode | escape }}">{{ tag.title.value | default: tag.name.value | escape }}</option>
               {%- endfor -%}
             </select>
           </div>
@@ -52,7 +52,7 @@ export default {
 
       <div class="row g-4" id="galleryGrid">
         {%- for image in entity.gallery_images -%}
-        <div class="col-12 col-md-6 col-lg-4 gallery-item-wrapper" data-tags="{%- for tag in image.tags -%}{{ tag.title | downcase | replace: ' ', '-' | escape }}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}" data-image-src="{% image_url = image | preset:'webp' %}" data-image-alt="{{ image.alt | default: 'Gallery image' | escape }}">
+        <div class="col-12 col-md-6 col-lg-4 gallery-item-wrapper" data-tags="{%- for tag in image.tags -%}tag:{{ tag.name.value | url_encode | escape }}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}" data-image-src="{% image_url = image | preset:'webp' %}" data-image-alt="{{ image.alt | default: 'Gallery image' | escape }}">
           <button class="gallery-item w-100 border-0 p-0 text-start" type="button" aria-label="Open {{ image.alt | default: 'Gallery image' | escape }} in image viewer">
             <span class="ratio ratio-4x3 d-block">
               <img src="{% image_url = image | preset:'webp' %}" alt="{{ image.alt | default: 'Gallery image' | escape }}" class="w-100 h-100 object-fit-cover" loading="lazy">
@@ -71,7 +71,7 @@ export default {
     </div>
   </section>
 
-  <div class="modal fade" id="galleryModal" role="dialog" tabindex="-1" aria-hidden="true" data-bs-keyboard="true" aria-label="Image gallery viewer">
+  <div class="gallery-component gallery-lightbox modal fade" id="galleryModal" role="dialog" tabindex="-1" aria-hidden="true" data-bs-keyboard="true" aria-label="Image gallery viewer">
     <div class="modal-dialog modal-fullscreen">
       <div class="modal-content gallery-modal-content">
         <div class="modal-header border-0 position-absolute top-0 end-0 z-3">
@@ -96,6 +96,14 @@ export default {
 </div>
 
 {%- add_stylesheet inline %}
+.gallery-lightbox.modal {
+  --bs-modal-zindex: 10001;
+}
+
+body:has(.gallery-lightbox.show) > .modal-backdrop {
+  --bs-backdrop-zindex: 10000;
+}
+
 .gallery-component .gallery-item {
   overflow: hidden;
   cursor: pointer;
@@ -213,6 +221,8 @@ document.addEventListener('DOMContentLoaded', function() {
   const carouselEl = root.querySelector('#galleryCarousel');
   const activeOutlineFilters = Boolean(root.querySelector('.gallery-filter-list--active-outline'));
   let carouselInstance = null;
+  // ponytail: the body avoids stacking contexts introduced by page sections.
+  document.body.appendChild(galleryModal);
 
   function filterGallery(filterValue) {
     let visibleCount = 0;
@@ -310,6 +320,9 @@ document.addEventListener('DOMContentLoaded', function() {
     'Add the Bootstrap 5.3 bundle to the page; this component uses Bootstrap Modal and Carousel.',
     'Bootstrap Icons CSS is used for the no-results icon.',
     'Add tags to gallery images that match the Filter Tags list so visitors can filter the gallery.',
+    'Filters match URL-encoded tag names, using the same key in buttons, the mobile menu, and image tags. Labels display the tag title with a name fallback.',
+    'The fullscreen lightbox moves to the document body and sits above sticky headers with z-index 9999; no header changes are needed.',
+    'The webp image preset is required for both thumbnails and fullscreen images and is included in component import packages.',
     'Choose Buttons or Text with active outline in Filter Style to control the desktop filter appearance.',
     'JavaScript and component styles are included inline in this single template. customJs and customCss are both enabled.',
     'The cards and filters are responsive. On mobile, filters use a select menu; selecting an image opens a fullscreen carousel of the currently visible images.',
@@ -322,24 +335,24 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="row mb-4 mb-lg-5"><div class="col-12 text-center"><h2 class="display-5 fw-bold">Spaces &amp; details</h2></div></div>
       <div class="row mb-4"><div class="col-12"><ul class="list-group list-group-horizontal justify-content-center d-none d-md-flex flex-wrap gap-3 border-0 bg-transparent p-0"><li class="list-group-item border-0 bg-transparent p-0"><button class="btn btn-primary rounded-0 filter-btn" type="button" data-filter="all" aria-pressed="true">All</button></li><li class="list-group-item border-0 bg-transparent p-0"><button class="btn btn-outline-primary rounded-0 filter-btn" type="button" data-filter="interior" aria-pressed="false">Interior</button></li><li class="list-group-item border-0 bg-transparent p-0"><button class="btn btn-outline-primary rounded-0 filter-btn" type="button" data-filter="exterior" aria-pressed="false">Exterior</button></li></ul><div class="d-md-none"><select class="form-select rounded-0" aria-label="Filter gallery images"><option>All Categories</option><option>Interior</option><option>Exterior</option></select></div></div></div>
       <div class="row g-4" id="galleryGrid">
-        <div class="col-12 col-md-6 col-lg-4 gallery-item-wrapper" data-tags="interior" data-image-src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='800' height='600' fill='%23dbe6ee'/%3E%3Cpath d='M0 480 220 250 410 430 580 190 800 460v140H0z' fill='%2397aebc'/%3E%3C/svg%3E" data-image-alt="Bright living room">
-          <button class="gallery-item w-100 border-0 p-0 text-start" type="button" aria-label="Open Bright living room in image viewer"><span class="ratio ratio-4x3 d-block"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='800' height='600' fill='%23dbe6ee'/%3E%3Cpath d='M0 480 220 250 410 430 580 190 800 460v140H0z' fill='%2397aebc'/%3E%3C/svg%3E" alt="Bright living room" class="w-100 h-100 object-fit-cover" loading="lazy"></span></button>
+        <div class="col-12 col-md-6 col-lg-4 gallery-item-wrapper" data-tags="interior" data-image-src="sample-image:modern" data-image-alt="Bright living room">
+          <button class="gallery-item w-100 border-0 p-0 text-start" type="button" aria-label="Open Bright living room in image viewer"><span class="ratio ratio-4x3 d-block"><img src="sample-image:modern" alt="Bright living room" class="w-100 h-100 object-fit-cover" loading="lazy"></span></button>
         </div>
-        <div class="col-12 col-md-6 col-lg-4 gallery-item-wrapper" data-tags="exterior" data-image-src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='800' height='600' fill='%23e4e6dc'/%3E%3Cpath d='M0 500 200 300 400 420 610 210 800 440v160H0z' fill='%2399a891'/%3E%3C/svg%3E" data-image-alt="Outdoor gathering space">
-          <button class="gallery-item w-100 border-0 p-0 text-start" type="button" aria-label="Open Outdoor gathering space in image viewer"><span class="ratio ratio-4x3 d-block"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='800' height='600' fill='%23e4e6dc'/%3E%3Cpath d='M0 500 200 300 400 420 610 210 800 440v160H0z' fill='%2399a891'/%3E%3C/svg%3E" alt="Outdoor gathering space" class="w-100 h-100 object-fit-cover" loading="lazy"></span></button>
+        <div class="col-12 col-md-6 col-lg-4 gallery-item-wrapper" data-tags="exterior" data-image-src="sample-image:exterior" data-image-alt="Outdoor gathering space">
+          <button class="gallery-item w-100 border-0 p-0 text-start" type="button" aria-label="Open Outdoor gathering space in image viewer"><span class="ratio ratio-4x3 d-block"><img src="sample-image:exterior" alt="Outdoor gathering space" class="w-100 h-100 object-fit-cover" loading="lazy"></span></button>
         </div>
-        <div class="col-12 col-md-6 col-lg-4 gallery-item-wrapper" data-tags="interior" data-image-src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='800' height='600' fill='%23ebe2d8'/%3E%3Cpath d='M0 470 240 260 430 420 620 170 800 450v150H0z' fill='%23c2a98f'/%3E%3C/svg%3E" data-image-alt="Warm interior detail">
-          <button class="gallery-item w-100 border-0 p-0 text-start" type="button" aria-label="Open Warm interior detail in image viewer"><span class="ratio ratio-4x3 d-block"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Crect width='800' height='600' fill='%23ebe2d8'/%3E%3Cpath d='M0 470 240 260 430 420 620 170 800 450v150H0z' fill='%23c2a98f'/%3E%3C/svg%3E" alt="Warm interior detail" class="w-100 h-100 object-fit-cover" loading="lazy"></span></button>
+        <div class="col-12 col-md-6 col-lg-4 gallery-item-wrapper" data-tags="interior" data-image-src="sample-image:home" data-image-alt="Warm interior detail">
+          <button class="gallery-item w-100 border-0 p-0 text-start" type="button" aria-label="Open Warm interior detail in image viewer"><span class="ratio ratio-4x3 d-block"><img src="sample-image:home" alt="Warm interior detail" class="w-100 h-100 object-fit-cover" loading="lazy"></span></button>
         </div>
       </div>
       <div id="galleryNoResults" class="row d-none"><div class="col-12 text-center py-5"><i class="bi bi-images text-muted gallery-empty-icon" aria-hidden="true"></i><p class="text-muted fs-5 mt-3 mb-0">No images found for this filter.</p></div></div>
     </div>
   </section>
-  <div class="modal fade" id="galleryModal" tabindex="-1" aria-hidden="true" data-bs-keyboard="true" aria-label="Image gallery viewer"><div class="modal-dialog modal-fullscreen"><div class="modal-content gallery-modal-content"><div class="modal-header border-0 position-absolute top-0 end-0 z-3"><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close image viewer"></button></div><div class="modal-body p-0 d-flex align-items-center justify-content-center"><div id="galleryCarousel" class="carousel slide h-100 w-100"><div class="carousel-inner h-100" id="galleryCarouselInner"></div><button class="carousel-control-prev" type="button" data-bs-target="#galleryCarousel" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></button><button class="carousel-control-next" type="button" data-bs-target="#galleryCarousel" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Next</span></button></div></div></div></div></div>
+  <div class="gallery-component gallery-lightbox modal fade" id="galleryModal" tabindex="-1" aria-hidden="true" data-bs-keyboard="true" aria-label="Image gallery viewer"><div class="modal-dialog modal-fullscreen"><div class="modal-content gallery-modal-content"><div class="modal-header border-0 position-absolute top-0 end-0 z-3"><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close image viewer"></button></div><div class="modal-body p-0 d-flex align-items-center justify-content-center"><div id="galleryCarousel" class="carousel slide h-100 w-100"><div class="carousel-inner h-100" id="galleryCarouselInner"></div><button class="carousel-control-prev" type="button" data-bs-target="#galleryCarousel" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></button><button class="carousel-control-next" type="button" data-bs-target="#galleryCarousel" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Next</span></button></div></div></div></div></div>
 </div>`,
   },
   mockData: {
-    filter_tags: ['Interior', 'Exterior'],
+    filters: ['Interior', 'Exterior'],
     filter_style: 'active-outline',
     title: 'Spaces & details',
     images: [

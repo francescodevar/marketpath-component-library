@@ -94,7 +94,7 @@ export default {
   ],
   preview: {
     html: `<section class="py-5 position-relative overflow-hidden bg-dark text-white">
-  <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 400'%3E%3Crect width='1200' height='400' fill='%23cbd4d8'/%3E%3Cpath d='M0 310 250 120l210 150 210-190 260 220 270-150v250H0z' fill='%237f9398'/%3E%3C/svg%3E" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover" alt="">
+  <img src="sample-image:exterior" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover" alt="">
   <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50" aria-hidden="true"></div>
   <div class="container py-2 position-relative">
     <div class="row align-items-center">

@@ -2,7 +2,7 @@ import { heroBackgroundFields } from '../shared-fields.js';
 
 export default {
   id: 'hero-03',
-  name: 'Diagonal Overlay Hero',
+  name: 'Hero Diagonal Overlay',
   category: 'hero',
   prefix: 'hero_01_',
   sharedFieldsId: 'hero_01',
@@ -54,7 +54,7 @@ export default {
   preview: {
     html: `<section class="position-relative d-flex align-items-center overflow-hidden bg-dark text-white py-5" style="min-height:620px;">
   <style>.hero-03-preview-overlay{background:linear-gradient(130deg,rgba(10,10,10,.68) 0%,rgba(10,10,10,.68) 65%,rgba(10,10,10,.38) 65%)}@media(max-width:767.98px){.hero-03-preview-overlay{background:rgba(10,10,10,.68)}}</style>
-  <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjkwMCIgdmlld0JveD0iMCAwIDEyMDAgOTAwIj48cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI5MDAiIGZpbGw9IiNlNWU5ZWUiLz48Y2lyY2xlIGN4PSI4MjUiIGN5PSIyNzAiIHI9Ijg1IiBmaWxsPSIjZDBkN2UwIi8+PHBhdGggZD0iTTAgOTAwVjc3MEwzNjAgMzkwIDY3MCA3MzAgODU1IDUzNSAxMjAwIDg3NVY5MDAiIGZpbGw9IiNjY2Q0ZGUiLz48cGF0aCBkPSJNMCA5MDBMMzYwIDUxMCA3MDAgOTAwIiBmaWxsPSIjYmRjOGQ1Ii8+PC9zdmc+" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover" alt="">
+  <img src="sample-image:exterior" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover" alt="">
   <div class="position-absolute top-0 start-0 w-100 h-100 hero-03-preview-overlay" aria-hidden="true"></div>
   <div class="container position-relative py-5">
     <div class="row"><div class="col-lg-8 col-xl-7">

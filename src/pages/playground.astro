@@ -9,10 +9,134 @@ const categoryGroups = categoryGroupsFor(categories);
 
 <Layout title="Playground — Marketpath Components" description="Build a page visually with reusable Marketpath components.">
   <main class="playground-app">
+    <section id="modeChooser" class="pg-entry-screen" aria-labelledby="entryTitle">
+      <header class="pg-entry-header">
+        <a class="brand" href="/" aria-label="Marketpath Components home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>Marketpath <strong>Components</strong></span></a>
+          <a href="/" class="pg-library-link">← Component library</a>
+      </header>
+      <div class="pg-entry-content">
+        <div class="pg-entry-copy">
+          <span class="pg-flow-kicker"><i></i> PLAYGROUND / WORKFLOW</span>
+          <h1 id="entryTitle">How would you like to start?</h1>
+          <p>Build a single page your way, or prepare a complete site structure for a Marketpath import.</p>
+        </div>
+        <div class="pg-mode-options grid grid-cols-1 gap-5 md:grid-cols-3">
+          <button class="pg-mode-card pg-mode-free" type="button" data-mode-choice="free">
+            <span class="pg-mode-art pg-mode-art-free" aria-hidden="true"><i></i><i></i><i></i><b>＋</b></span>
+            <span class="pg-mode-copy"><span class="pg-mode-label">FOR A QUICK BUILD</span><strong>Free mode</strong><small>Start with a blank canvas. Add, arrange, and edit components one at a time.</small></span>
+            <span class="pg-mode-action">Open the Playground <b aria-hidden="true">→</b></span>
+          </button>
+          <button class="pg-mode-card pg-mode-guided" type="button" data-mode-choice="theme">
+            <span class="pg-mode-art pg-mode-art-theme" aria-hidden="true"><i></i><i></i><i></i><i></i><b>↗</b></span>
+            <span class="pg-mode-copy"><span class="pg-mode-label">FOR A FULL-SITE IMPORT</span><strong>Prepare an import</strong><small>Choose the pages your site needs, then build each page with reusable components.</small></span>
+            <span class="pg-mode-action">Prepare a site <b aria-hidden="true">→</b></span>
+          </button>
+          <button class="pg-mode-card pg-mode-guided pg-mode-saved" type="button" id="savedThemeCard" data-mode-choice="saved" disabled>
+            <span class="pg-mode-art pg-mode-art-theme" aria-hidden="true"><i></i><i></i><i></i><i></i><b>✓</b></span>
+            <span class="pg-mode-copy"><span class="pg-mode-label">PICK UP WHERE YOU LEFT OFF</span><strong>Start from a saved theme</strong><small id="savedThemeInfo">No saved theme yet. Use “Save theme” while building to keep one here.</small></span>
+            <span class="pg-mode-action">Open saved theme <b aria-hidden="true">→</b></span>
+          </button>
+        </div>
+        <div class="pg-entry-foot"><span><i></i> Your work is saved in this browser</span><span>Bootstrap 5.3 · Marketpath CMS</span></div>
+      </div>
+    </section>
+
+    <section id="themeSetup" class="pg-theme-setup" aria-labelledby="themeSetupTitle" hidden>
+      <header class="pg-flow-header">
+        <a class="brand" href="/" aria-label="Marketpath Components home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>Marketpath <strong>Components</strong></span></a>
+        <div class="pg-flow-breadcrumb"><span>PLAYGROUND</span><b aria-hidden="true">/</b><strong>PREPARE AN IMPORT</strong></div>
+        <button class="pg-flow-back" type="button" data-mode-back>← Change mode</button>
+      </header>
+      <div class="pg-setup-main mx-auto w-full max-w-6xl px-5 py-10">
+        <div class="pg-setup-intro">
+          <div><span class="pg-flow-kicker"><i></i> PREPARE AN IMPORT / 01</span><h1 id="themeSetupTitle">Which pages does your site need?</h1><p>Select the pages you want to build. Next, add components to each page and reuse them across your site.</p></div>
+          <div class="pg-selection-count"><strong id="themeSelectedPageCount">3 pages</strong><span>selected</span></div>
+        </div>
+
+        <section class="pg-shell-selection" aria-labelledby="shellTitle">
+          <div class="pg-setup-section-title"><span>GLOBAL SITE ELEMENTS</span><small>Choose shared variants. Page Title and CTA can be removed from individual pages.</small></div>
+          <div class="pg-shell-cards grid grid-cols-1 gap-3 md:grid-cols-2">
+            <article class="pg-shell-card"><span class="pg-shell-card-icon" aria-hidden="true">⌂</span><span class="pg-shell-card-copy"><strong>Header</strong><small>Global · used on every page</small></span><button class="pg-shell-card-picker" type="button" data-theme-global-picker="header" aria-label="Choose Header"><span data-theme-global-label="header">Header 01</span><i aria-hidden="true">⌄</i></button></article>
+            <article class="pg-shell-card"><span class="pg-shell-card-icon pg-shell-footer-icon" aria-hidden="true">▤</span><span class="pg-shell-card-copy"><strong>Footer</strong><small>Global · uses Page Settings</small></span><button class="pg-shell-card-picker" type="button" data-theme-global-picker="footer" aria-label="Choose Footer"><span data-theme-global-label="footer">Footer 01</span><i aria-hidden="true">⌄</i></button></article>
+            <article class="pg-shell-card"><span class="pg-shell-card-icon pg-shell-title-icon" aria-hidden="true">¶</span><span class="pg-shell-card-copy"><strong>Page Title</strong><small>Default · removable per page</small></span><button class="pg-shell-card-picker" type="button" data-theme-global-picker="pageTitle" aria-label="Choose Page Title"><span data-theme-global-label="pageTitle">Page Title 01</span><i aria-hidden="true">⌄</i></button></article>
+            <article class="pg-shell-card"><span class="pg-shell-card-icon pg-shell-cta-icon" aria-hidden="true">↗</span><span class="pg-shell-card-copy"><strong>CTA</strong><small>Default · removable per page</small></span><button class="pg-shell-card-picker" type="button" data-theme-global-picker="cta" aria-label="Choose CTA"><span data-theme-global-label="cta">CTA 01</span><i aria-hidden="true">⌄</i></button></article>
+          </div>
+        </section>
+
+        <div id="themeSiteDomainField" class="pg-site-domain-field">
+          <label for="themeSiteDomain"><span>Target Marketpath site domain</span><small>Used for the imported page URLs and required for Error 404.</small></label>
+          <div><input id="themeSiteDomain" type="text" inputmode="url" autocomplete="url" placeholder="your-site.marketpath.site" aria-describedby="themeSiteDomainHelp"><span>SiteDomainGUID</span></div>
+          <small id="themeSiteDomainHelp">Enter the site host only, without https:// or a page path.</small>
+        </div>
+
+        <div class="pg-setup-section-title pg-pages-title"><span>SITE PAGES</span><small>You can return here and add more pages at any time.</small></div>
+        <div class="pg-theme-page-picker grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
+          <label class="pg-page-picker-card is-selected" data-theme-page-card="home"><input type="checkbox" data-theme-page-toggle="home" checked><span class="pg-page-picker-check" aria-hidden="true"></span><span class="pg-page-picker-icon">H</span><span class="pg-page-picker-copy"><strong>Home</strong><small>Your site's home page</small></span><span class="pg-page-picker-type">HOME</span></label>
+          <label class="pg-page-picker-card" data-theme-page-card="generic"><input type="checkbox" data-theme-page-toggle="generic"><span class="pg-page-picker-check" aria-hidden="true"></span><span class="pg-page-picker-icon">P</span><span class="pg-page-picker-copy"><strong>Generic Page</strong><small>Flexible content for interior pages</small></span><span class="pg-page-picker-type">PAGE</span></label>
+          <label class="pg-page-picker-card" data-theme-page-card="about"><input type="checkbox" data-theme-page-toggle="about"><span class="pg-page-picker-check" aria-hidden="true"></span><span class="pg-page-picker-icon">A</span><span class="pg-page-picker-copy"><strong>About</strong><small>Company story and introduction</small></span><span class="pg-page-picker-type">CONTENT</span></label>
+          <label class="pg-page-picker-card is-selected" data-theme-page-card="contact"><input type="checkbox" data-theme-page-toggle="contact" checked><span class="pg-page-picker-check" aria-hidden="true"></span><span class="pg-page-picker-icon">C</span><span class="pg-page-picker-copy"><strong>Contact</strong><small>Contact information and form</small></span><span class="pg-page-picker-type">CONTACT</span></label>
+          <label class="pg-page-picker-card is-selected" data-theme-page-card="error"><input type="checkbox" data-theme-page-toggle="error" checked><span class="pg-page-picker-check" aria-hidden="true"></span><span class="pg-page-picker-icon">404</span><span class="pg-page-picker-copy"><strong>Error 404</strong><small>Page for missing routes</small></span><span class="pg-page-picker-type">SYSTEM</span></label>
+          <label class="pg-page-picker-card" data-theme-page-card="services"><input type="checkbox" data-theme-page-toggle="services"><span class="pg-page-picker-check" aria-hidden="true"></span><span class="pg-page-picker-icon">S</span><span class="pg-page-picker-copy"><strong>Services</strong><small>Service listing page</small></span><span class="pg-page-picker-type">LISTING</span></label>
+          <label class="pg-page-picker-card" data-theme-page-card="inside-services"><input type="checkbox" data-theme-page-toggle="inside-services"><span class="pg-page-picker-check" aria-hidden="true"></span><span class="pg-page-picker-icon">↳</span><span class="pg-page-picker-copy"><strong>Inside Services</strong><small>Individual service detail</small></span><span class="pg-page-picker-type">DETAIL</span></label>
+          <label class="pg-page-picker-card" data-theme-page-card="projects"><input type="checkbox" data-theme-page-toggle="projects"><span class="pg-page-picker-check" aria-hidden="true"></span><span class="pg-page-picker-icon">P</span><span class="pg-page-picker-copy"><strong>Projects</strong><small>Project listing page</small></span><span class="pg-page-picker-type">LISTING</span></label>
+          <label class="pg-page-picker-card" data-theme-page-card="inside-projects"><input type="checkbox" data-theme-page-toggle="inside-projects"><span class="pg-page-picker-check" aria-hidden="true"></span><span class="pg-page-picker-icon">↳</span><span class="pg-page-picker-copy"><strong>Inside Projects</strong><small>Individual project detail</small></span><span class="pg-page-picker-type">DETAIL</span></label>
+          <label class="pg-page-picker-card" data-theme-page-card="blog"><input type="checkbox" data-theme-page-toggle="blog"><span class="pg-page-picker-check" aria-hidden="true"></span><span class="pg-page-picker-icon">B</span><span class="pg-page-picker-copy"><strong>Blog</strong><small>Blog listing, articles, and detail</small></span><span class="pg-page-picker-type">BLOG</span></label>
+          <label class="pg-page-picker-card" data-theme-page-card="testimonials"><input type="checkbox" data-theme-page-toggle="testimonials"><span class="pg-page-picker-check" aria-hidden="true"></span><span class="pg-page-picker-icon">“</span><span class="pg-page-picker-copy"><strong>Testimonials</strong><small>Testimonial page or section</small></span><span class="pg-page-picker-type">CONTENT</span></label>
+          <label class="pg-page-picker-card" data-theme-page-card="team"><input type="checkbox" data-theme-page-toggle="team"><span class="pg-page-picker-check" aria-hidden="true"></span><span class="pg-page-picker-icon">T</span><span class="pg-page-picker-copy"><strong>Team Members</strong><small>Team directory</small></span><span class="pg-page-picker-type">CONTENT</span></label>
+          <label class="pg-page-picker-card" data-theme-page-card="gallery"><input type="checkbox" data-theme-page-toggle="gallery"><span class="pg-page-picker-check" aria-hidden="true"></span><span class="pg-page-picker-icon">▦</span><span class="pg-page-picker-copy"><strong>Gallery</strong><small>Image gallery page</small></span><span class="pg-page-picker-type">MEDIA</span></label>
+          <label class="pg-page-picker-card" data-theme-page-card="faqs"><input type="checkbox" data-theme-page-toggle="faqs"><span class="pg-page-picker-check" aria-hidden="true"></span><span class="pg-page-picker-icon">?</span><span class="pg-page-picker-copy"><strong>FAQs</strong><small>Frequently asked questions</small></span><span class="pg-page-picker-type">CONTENT</span></label>
+        </div>
+        <footer class="pg-setup-footer"><button type="button" class="pg-setup-back" data-mode-back>← Back to mode selection</button><span>Header and footer are automatically shared across all pages.</span><button id="themeContinue" type="button" class="pg-flow-next">Design pages <span aria-hidden="true">→</span></button></footer>
+      </div>
+    </section>
+
+    <section id="themeBuilder" class="pg-theme-builder" aria-label="Theme builder" hidden>
+      <header class="pg-theme-topbar">
+        <a class="brand" href="/" aria-label="Marketpath Components home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>Marketpath <strong>Components</strong></span></a>
+        <div class="pg-theme-doc-title"><span>PREPARE AN IMPORT</span><strong id="themeName">Example theme</strong></div>
+        <div class="pg-theme-top-actions"><span class="pg-theme-save-state"><i></i><span id="themeSaveState">Saved</span></span><label class="pg-theme-theme-picker">Theme<select id="themeAssetTheme" aria-label="Export theme"><option value="contractor">Contractor</option><option value="house-painter">House Painter</option></select></label><label class="pg-theme-theme-picker">Projects<select id="themeProjectCount" aria-label="Number of projects"><option value="1">1</option><option value="2">2</option><option value="3" selected>3</option></select></label><button type="button" class="pg-theme-pages-button" data-theme-variables-open>Variables</button><button type="button" class="pg-theme-pages-button" data-theme-edit-pages>Edit pages</button><button type="button" class="pg-theme-save-button" data-theme-save>Save theme</button><span id="themeExportDomainHint" class="pg-theme-domain-hint" hidden>Set the site domain</span><button type="button" class="pg-theme-export-button" data-theme-export>Export theme <span aria-hidden="true">↓</span></button></div>
+      </header>
+      <nav id="themePageTabs" class="pg-theme-page-tabs" role="tablist" aria-label="Theme pages"></nav>
+      <div class="pg-theme-toolbar">
+        <div class="pg-theme-current-page"><span class="pg-theme-page-mark" id="themeCurrentMark">H</span><div><strong id="themeCurrentTitle">Home</strong><small id="themeCurrentType">HOME PAGE</small></div></div>
+        <div class="pg-theme-viewport" role="group" aria-label="Preview size"><button type="button" data-theme-viewport="1200" aria-pressed="true">Desktop</button><button type="button" data-theme-viewport="768" aria-pressed="false">Tablet</button><button type="button" data-theme-viewport="390" aria-pressed="false">Mobile</button></div>
+        <div class="pg-theme-toolbar-right"><span id="themeBlockCount">0 components</span><button type="button" data-theme-clear-page>Clear page</button></div>
+      </div>
+      <div class="pg-theme-workspace grid grid-cols-1 md:grid-cols-[220px_minmax(350px,1fr)] lg:grid-cols-[245px_minmax(350px,1fr)_260px] xl:grid-cols-[278px_minmax(380px,1fr)_290px]">
+        <aside class="pg-theme-sidebar pg-theme-library" aria-label="Component library">
+          <div class="pg-theme-panel-heading pg-theme-library-heading"><h2>Library on this page</h2></div>
+          <div class="pg-theme-panel-tabs" role="tablist" aria-label="Component library and usage"><button type="button" data-theme-panel="page" aria-selected="true">On this page <span id="themeUsedCount">0</span></button><button type="button" data-theme-panel="site" aria-selected="false">On this site <span id="themeSiteCount">0</span></button></div>
+          <div id="themeLibraryPanel" class="pg-theme-library-panel">
+            <button type="button" class="pg-theme-library-back" data-theme-panel="page"><span aria-hidden="true">←</span> Back to this page</button>
+            <label class="pg-theme-search"><span aria-hidden="true">⌕</span><input id="themeComponentSearch" type="search" placeholder="Search components…" aria-label="Search components"></label>
+            <button type="button" id="themeOpenComponentTypes" class="pg-theme-filter-button"><span>COMPONENT TYPE</span><strong>Browse sections</strong><i aria-hidden="true">↗</i></button>
+            <p class="pg-theme-list-label">AVAILABLE COMPONENTS <span>Add to this page</span></p>
+            <div id="themeComponentList" class="pg-theme-component-list grid gap-2"></div>
+            <p id="themeLibraryEmpty" class="pg-theme-library-empty" hidden>No components match your search.</p>
+          </div>
+          <div id="themePagePanel" class="pg-theme-used-panel" hidden><div id="themePageList"></div><p id="themeNoPageComponents" class="pg-theme-no-used">No components on this page yet.<br>Open the Library to add one.</p></div>
+          <div id="themeSitePanel" class="pg-theme-used-panel" hidden><div id="themeSiteList"></div><p id="themeNoSiteComponents" class="pg-theme-no-used">No components have been added to this site yet.</p></div>
+        </aside>
+
+        <section class="pg-theme-canvas-area" aria-label="Page preview">
+          <div class="pg-theme-canvas-toolbar"><span><i></i> PAGE PREVIEW</span><span id="themeCanvasWidth">1200 px</span><span class="pg-theme-canvas-actions"><button type="button" id="themeLargePreview" class="pg-theme-large-preview">Preview <span aria-hidden="true">⤢</span></button><button type="button" id="themeOpenPreview" aria-label="Open preview in a new tab">↗</button></span></div>
+          <div id="themeCanvasStage" class="pg-theme-canvas-stage"><div id="themeFrameSizer" class="pg-theme-frame-sizer"><iframe id="themePageFrame" title="Theme page preview" sandbox="allow-same-origin"></iframe></div></div>
+          <div class="pg-theme-canvas-footer"><span>Preview includes your selected global elements.</span><span>Bootstrap 5.3</span></div>
+        </section>
+
+        <aside class="pg-theme-sidebar pg-theme-inspector hidden lg:block" aria-label="Page components">
+          <div class="pg-theme-panel-heading"><div><span>PAGE STRUCTURE</span><h2 id="themeInspectorTitle">This page</h2></div></div>
+          <div class="pg-theme-inspector-body" id="themeInspectorBody"><div class="pg-theme-inspector-empty"><span>◫</span><strong>Select a section</strong><small>Click a component in the preview or add one from the Library.</small></div></div>
+        </aside>
+      </div>
+      <div id="themeBuilderStatus" class="pg-theme-status" role="status" aria-live="polite"></div>
+    </section>
+
+    <div id="freePlayground" hidden>
     <header class="pg-topbar">
       <a class="brand" href="/" aria-label="Marketpath Components home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>Marketpath <strong>Components</strong></span></a>
       <div class="pg-breadcrumb"><span aria-hidden="true">/</span><strong>Playground</strong><span class="pg-saved"><i></i> Saved in this browser</span></div>
-      <nav class="pg-top-actions" aria-label="Playground actions"><a href="/" class="pg-library-link">← Component library</a><button id="createTextExamples" class="pg-examples-toggle" type="button" aria-pressed="false" title="Include one example Article and four items per selected datastore"><span aria-hidden="true">✦</span> Create text examples</button><button id="exportMarketpath" class="pg-marketpath-button" type="button" disabled title="Download a minimal JSON package for Marketpath CMS"><span aria-hidden="true">{ }</span> CMS Import JSON</button><button id="exportPage" class="pg-export-button" type="button"><span aria-hidden="true">↥</span> Export HTML</button></nav>
+      <nav class="pg-top-actions" aria-label="Playground actions"><a href="/about/" class="pg-library-link">About</a><a href="/" class="pg-library-link">← Component library</a><button id="createTextExamples" class="pg-examples-toggle" type="button" aria-pressed="false" title="Include one example Article and four items per selected datastore"><span aria-hidden="true">✦</span> Create text examples</button><button id="exportMarketpath" class="pg-marketpath-button" type="button" disabled title="Download a minimal JSON package for Marketpath CMS"><span aria-hidden="true">{ }</span> CMS Import JSON</button><button id="exportPage" class="pg-export-button" type="button"><span aria-hidden="true">↥</span> Export HTML</button></nav>
     </header>
 
     <div class="pg-toolbar">
@@ -53,7 +177,50 @@ const categoryGroups = categoryGroupsFor(categories);
       </aside>
     </div>
     <div id="playgroundStatus" class="pg-status" role="status" aria-live="polite"></div>
+    </div>
   </main>
+  <dialog id="themePreviewDialog" class="pg-theme-preview-dialog" aria-label="Page preview">
+    <header class="pg-theme-preview-bar"><span>PAGE PREVIEW</span><select id="themePreviewPage" class="pg-theme-preview-page" aria-label="Preview page"></select><span id="themePreviewNote" class="pg-theme-preview-note" role="status"></span><button type="button" data-theme-preview-close aria-label="Close preview">×</button></header>
+    <iframe id="themePreviewFrame" class="pg-theme-preview-frame" title="Large page preview" sandbox="allow-same-origin"></iframe>
+  </dialog>
+  <dialog id="themeGlobalDialog" class="pg-theme-global-dialog" aria-labelledby="themeGlobalTitle">
+    <div class="pg-theme-global-dialog-inner">
+      <header><div><span>GLOBAL SITE ELEMENT</span><h2 id="themeGlobalTitle">Choose a variant</h2><p id="themeGlobalDescription"></p></div><button type="button" data-theme-global-close aria-label="Close variant picker">×</button></header>
+      <div id="themeGlobalChoices" class="pg-theme-global-choices"></div>
+      <footer><span>Page Title and CTA can be removed from individual pages.</span><button type="button" data-theme-global-close>Done</button></footer>
+    </div>
+  </dialog>
+  <dialog id="themeVariablesDialog" class="pg-theme-variables-dialog" aria-labelledby="themeVariablesTitle">
+    <form method="dialog" class="pg-theme-variables-inner">
+      <header><div><span>THEME TOKENS</span><h2 id="themeVariablesTitle">Variables</h2><p>Set the colors and Google Font used in the exported <code>_variables.scss</code>.</p></div><button type="button" data-theme-variables-close aria-label="Close variables">×</button></header>
+      <div class="pg-theme-variables-content">
+        <section class="pg-theme-token-grid" aria-label="Theme colors">
+          <label><span>Primary</span><input type="color" data-theme-token="primary"></label>
+          <label><span>Secondary</span><input type="color" data-theme-token="secondary"></label>
+          <label><span>Dark</span><input type="color" data-theme-token="dark"></label>
+          <label><span>Light</span><input type="color" data-theme-token="light"></label>
+          <label><span>White</span><input type="color" data-theme-token="white"></label>
+        </section>
+        <label class="pg-theme-font-field"><span>Font family · Google Fonts</span><select data-theme-token="fontFamily"><option>Exo 2</option><option>Roboto</option><option>Montserrat</option><option>Lato</option><option>Open Sans</option><option>Poppins</option><option>Inter</option></select></label>
+        <label class="pg-theme-scss-label" for="themeVariablesCode">_variables.scss preview</label>
+        <pre class="pg-theme-scss-preview"><code id="themeVariablesCode"></code></pre>
+      </div>
+      <footer><span>These values are added to the theme ZIP.</span><button type="button" data-theme-variables-close>Done</button></footer>
+    </form>
+  </dialog>
+  <dialog id="themeInsertDialog" class="pg-theme-insert-dialog" aria-labelledby="themeInsertTitle">
+    <div class="pg-theme-insert-dialog-inner">
+      <header class="pg-theme-insert-header"><div><span>BUILD YOUR PAGE</span><h2 id="themeInsertTitle">Add a section</h2><p id="themeInsertContext">Choose a component to add to this page.</p></div><button type="button" class="pg-theme-variant-close" data-theme-insert-close aria-label="Close component picker">×</button></header>
+      <div class="pg-theme-insert-tools">
+        <nav id="themeInsertGroups" class="pg-theme-insert-groups" aria-label="Component groups"></nav>
+        <label class="pg-theme-insert-search"><span aria-hidden="true">⌕</span><input id="themeInsertSearch" type="search" placeholder="Search components…" aria-label="Search components"></label>
+      </div>
+      <nav id="themeInsertCategories" class="pg-theme-insert-categories" aria-label="Component categories"></nav>
+      <div id="themeInsertComponents" class="pg-theme-insert-grid"></div>
+      <p id="themeInsertEmpty" class="pg-theme-insert-empty" hidden>No components found in this group.</p>
+      <footer class="pg-theme-insert-footer"><span id="themeInsertFooterNote">Choose a preview to insert it at the selected point on this page.</span><button type="button" data-theme-insert-close>Cancel</button></footer>
+    </div>
+  </dialog>
   <dialog id="exportDialog" class="pg-export-dialog"><form method="dialog"><div class="pg-export-head"><div><span class="pg-panel-kicker">TAKE IT WITH YOU</span><h2>Export your page</h2><p>Preview HTML for your layout. Components are static samples from the library.</p></div><button class="pg-close-dialog" aria-label="Close">×</button></div><textarea id="exportCode" readonly aria-label="Exported page HTML"></textarea><button id="copyExport" type="button" class="pg-export-button">Copy HTML <span aria-hidden="true">⧉</span></button></form></dialog>
   <script>
     import '../scripts/playground.js';

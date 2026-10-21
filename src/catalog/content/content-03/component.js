@@ -1,6 +1,6 @@
 export default {
   id: 'content-03',
-  name: 'Craftsmanship + Benefits',
+  name: 'Content Image-Led About with Benefits',
   category: 'content',
   prefix: 'content_03_',
   customCss: false,
@@ -196,7 +196,7 @@ export default {
       <div class="col">
         <div class="ratio ratio-1x1">
           <div class="overflow-hidden">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 800'%3E%3Crect width='800' height='800' fill='%23d6d3cc'/%3E%3Crect x='90' y='80' width='390' height='650' fill='%23363b3d'/%3E%3Crect x='115' y='105' width='340' height='600' fill='%23212628'/%3E%3Cpath d='M480 0h320v800H500l-20-120z' fill='%23ece9e3'/%3E%3Crect x='530' y='215' width='210' height='20' fill='%23a69a88'/%3E%3Crect x='540' y='480' width='160' height='110' rx='8' fill='%238c7b64'/%3E%3Ccircle cx='630' cy='430' r='62' fill='%234e634d'/%3E%3C/svg%3E" class="w-100 h-100 object-fit-cover" alt="Example renovated interior">
+            <img src="sample-image:modern" class="w-100 h-100 object-fit-cover" alt="Example renovated interior">
             <div class="card text-bg-primary rounded-0 border-0 position-absolute bottom-0 end-0 w-25 h-25">
               <div class="card-body d-flex flex-column justify-content-center align-items-center p-2 p-sm-3 text-center"><span class="fs-1 fw-bold lh-1">20+</span><span class="small text-uppercase fw-semibold mt-1">Years of experience</span></div>
             </div>

@@ -1,6 +1,6 @@
 export default {
   id: 'blog-01',
-  name: 'Blog Listing & Post Layout',
+  name: 'Blog Listing and Post Layout',
   category: 'blog',
   prefix: 'blog_01_',
   bootstrap: true,

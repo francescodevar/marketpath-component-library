@@ -1,6 +1,6 @@
 export default {
   id: 'hero-02',
-  name: 'Split Hero',
+  name: 'Hero Split Layout',
   category: 'hero',
   prefix: 'hero_02_',
   customCss: false,
@@ -93,7 +93,7 @@ export default {
   <div class="container py-lg-5">
     <div class="row g-5 align-items-center">
       <div class="col-lg"><h1 class="display-5 fw-bold mb-0">Good things start with a better space.</h1><p class="lead text-secondary mt-4 mb-0">Windows, doors, and decks made for the moments that matter. Discover what is possible.</p><a class="btn btn-primary mt-4" href="#">Find your inspiration</a></div>
-      <div class="col-lg-6"><div class="ratio ratio-4x3"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAwIiBoZWlnaHQ9IjkwMCIgdmlld0JveD0iMCAwIDEyMDAgOTAwIj48cmVjdCB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI5MDAiIGZpbGw9IiNlNWU5ZWUiLz48Y2lyY2xlIGN4PSI4MjUiIGN5PSIyNzAiIHI9Ijg1IiBmaWxsPSIjZDBkN2UwIi8+PHBhdGggZD0iTTAgOTAwVjc3MEwzNjAgMzkwIDY3MCA3MzAgODU1IDUzNSAxMjAwIDg3NVY5MDAiIGZpbGw9IiNjY2Q0ZGUiLz48cGF0aCBkPSJNMCA5MDBMMzYwIDUxMCA3MDAgOTAwIiBmaWxsPSIjYmRjOGQ1Ii8+PC9zdmc+" class="w-100 h-100 object-fit-cover rounded" alt="Sample image placeholder"></div></div>
+      <div class="col-lg-6"><div class="ratio ratio-4x3"><img src="sample-image:modern" class="w-100 h-100 object-fit-cover rounded" alt="Sample image placeholder"></div></div>
     </div>
   </div>
 </section>`,

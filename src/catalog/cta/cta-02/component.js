@@ -2,7 +2,7 @@ import { callToActionFields } from '../shared-fields.js';
 
 export default {
   id: 'cta-02',
-  name: 'Split CTA',
+  name: 'CTA Split Layout',
   category: 'cta',
   prefix: 'cta_',
   sharedFieldsId: 'cta',
@@ -42,7 +42,7 @@ export default {
   notes: [
     'Select a Call to Action item from the shared datastore. View Datastore shows the reusable item fields.',
     'Replace the DatastoreGUID placeholder in the shared component field with your site’s Call to Action datastore GUID.',
-    'This variant uses the same CTA item as Phone & Quote CTA, with a compact side-by-side layout.',
+    'This variant uses the same CTA item as CTA Phone and Quote, with a compact side-by-side layout.',
   ],
   preview: {
     html: `<section class="py-5 bg-light">

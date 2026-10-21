@@ -1,16 +1,16 @@
 export default {
   id: 'banner-03',
-  name: 'Stats Banner',
+  name: 'Banner Stats Row',
   category: 'banner',
   prefix: 'banner_03_',
   bootstrap: true,
-  customCss: false,
+  customCss: true,
   customJs: false,
   bootstrapJs: false,
   description: 'A responsive row of up to four proof points with Bootstrap Icons.',
   tags: ['stats', 'icons', 'four-column', 'banner'],
   template: `{%- if entity.banner_03_stats_banner_items.is_valid -%}
-<section class="bg-light py-5">
+<section class="bg-white py-5">
   <div class="container py-2">
     <div class="row g-4">
       {%- for item in entity.banner_03_stats_banner_items -%}
@@ -18,12 +18,12 @@ export default {
         <div class="d-flex align-items-center h-100">
           {%- if item.icon.is_valid -%}
           <div class="flex-shrink-0 me-3">
-            <i class="{{ item.icon.value | escape }} fs-1 text-dark"></i>
+            <i class="{{ item.icon.value | escape }} fs-1" style="color:#c6530c"></i>
           </div>
           {%- endif -%}
           <div>
             {%- if item.title.is_valid -%}
-            <div class="fs-2 fw-bold lh-1 text-primary mb-1">
+            <div class="fs-2 fw-bold lh-1 mb-1" style="color:#c6530c">
               {{ item.title }}
             </div>
             {%- endif -%}
@@ -104,41 +104,41 @@ export default {
     'The section and container use the gallery spacing convention: py-5 and container py-2.',
   ],
   preview: {
-    html: `<section class="bg-light py-5">
+    html: `<section class="bg-white py-5">
   <div class="container py-2">
     <div class="row g-4">
       <div class="col-12 col-sm-6 col-lg-3">
         <div class="d-flex align-items-center h-100">
-          <div class="flex-shrink-0 me-3"><i class="bi bi-person-check fs-1 text-dark"></i></div>
+          <div class="flex-shrink-0 me-3"><i class="bi bi-person-check fs-1" style="color:#c6530c"></i></div>
           <div>
-            <div class="fs-2 fw-bold lh-1 text-primary mb-1">10+</div>
+            <div class="fs-2 fw-bold lh-1 mb-1" style="color:#c6530c">10+</div>
             <div class="text-uppercase lh-sm">Years of experience</div>
           </div>
         </div>
       </div>
       <div class="col-12 col-sm-6 col-lg-3">
         <div class="d-flex align-items-center h-100">
-          <div class="flex-shrink-0 me-3"><i class="bi bi-house fs-1 text-dark"></i></div>
+          <div class="flex-shrink-0 me-3"><i class="bi bi-house fs-1" style="color:#c6530c"></i></div>
           <div>
-            <div class="fs-2 fw-bold lh-1 text-primary mb-1">500+</div>
+            <div class="fs-2 fw-bold lh-1 mb-1" style="color:#c6530c">500+</div>
             <div class="text-uppercase lh-sm">Projects completed</div>
           </div>
         </div>
       </div>
       <div class="col-12 col-sm-6 col-lg-3">
         <div class="d-flex align-items-center h-100">
-          <div class="flex-shrink-0 me-3"><i class="bi bi-emoji-smile fs-1 text-dark"></i></div>
+          <div class="flex-shrink-0 me-3"><i class="bi bi-emoji-smile fs-1" style="color:#c6530c"></i></div>
           <div>
-            <div class="fs-2 fw-bold lh-1 text-primary mb-1">98%</div>
+            <div class="fs-2 fw-bold lh-1 mb-1" style="color:#c6530c">98%</div>
             <div class="text-uppercase lh-sm">Happy clients</div>
           </div>
         </div>
       </div>
       <div class="col-12 col-sm-6 col-lg-3">
         <div class="d-flex align-items-center h-100">
-          <div class="flex-shrink-0 me-3"><i class="bi bi-graph-up-arrow fs-1 text-dark"></i></div>
+          <div class="flex-shrink-0 me-3"><i class="bi bi-graph-up-arrow fs-1" style="color:#c6530c"></i></div>
           <div>
-            <div class="fs-2 fw-bold lh-1 text-primary mb-1">Our promise</div>
+            <div class="fs-2 fw-bold lh-1 mb-1" style="color:#c6530c">Our promise</div>
             <div class="text-uppercase lh-sm">Quality, built to last</div>
           </div>
         </div>

@@ -1,6 +1,6 @@
 export default {
   id: 'services-individual-01',
-  name: 'Service Detail Page',
+  name: 'Services Detail Page',
   category: 'inside-services',
   prefix: 'services_individual_01_',
   entityDatastoreId: 'services',
@@ -165,7 +165,7 @@ export default {
         <div class="small"><ul class="mb-0"><li>Monday–Friday: 8:00 a.m.–5:00 p.m.</li><li>Saturday: By appointment</li><li>Sunday: Closed</li></ul></div>
       </aside>
       <div class="col-12 col-lg-9">
-        <div class="ratio ratio-16x9 mb-4 overflow-hidden"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 675'%3E%3Crect width='1200' height='675' fill='%23cbd4d8'/%3E%3Cpath d='M0 520 250 220l220 230 230-330 250 310 250-170v415H0z' fill='%237f9398'/%3E%3C/svg%3E" class="w-100 h-100 object-fit-cover" alt="Example service project"></div>
+        <div class="ratio ratio-16x9 mb-4 overflow-hidden"><img src="sample-image:modern" class="w-100 h-100 object-fit-cover" alt="Example service project"></div>
         <div class="lead mb-4"><p>A clear overview of the service and what to expect.</p></div>
         <div class="mb-5"><h2>Service Overview</h2><p>Thoughtful planning, skilled work, and careful attention to the details help make each project straightforward.</p><h2>Our Process</h2><p>We review your goals, explain the options, and keep you informed as the work moves forward.</p></div>
         <section class="pt-4" aria-labelledby="servicesIndividualFaqTitlePreview">

@@ -1,6 +1,6 @@
 export default {
   id: 'header-01',
-  name: 'Sticky Offcanvas Header',
+  name: 'Header Sticky Offcanvas',
   category: 'header',
   prefix: 'header_01_',
   bootstrap: true,
@@ -30,7 +30,7 @@ export default {
     <meta property="og:url" content="{{ entity.full_url }}" />
   </head>
   <body>
-    {%- datastore_items var siteDS = datastore:'89f2db88-94bd-4a59-bcf0-a231e4d7f9df' limit:1 sort_direction:'asc' -%}
+    {%- datastore_items var siteDS = datastore:'Page Settings' limit:1 sort_direction:'asc' -%}
     {%- assign settings = siteDS.fetched[0].data -%}
     {%- unless minimal_header_and_footer_content -%}
     {% comment %}
@@ -143,7 +143,7 @@ export default {
 {%- endunless %}`,
   fields: [],
   notes: [
-    'The Template panel contains the complete MPSS1 shared-header scaffold and navigation markup at the navigation comment, so it can be copied as one block. It opens <main> immediately after navigation; the site footer closes it. The supplied Settings datastore GUID is retained in the datastore_items call.',
+    'The Template panel contains the complete MPSS1 shared-header scaffold and navigation markup at the navigation comment, so it can be copied as one block. It opens <main> immediately after navigation; the site footer closes it. The datastore_items call uses the shared Page Settings datastore name.',
     'The logo keeps its intrinsic aspect ratio and is capped at 64px high so it does not stretch or force a tall navbar. The header reads logo_image, main_menu, and header_cta_* from settings = siteDS.fetched[0].data, so it has no page Custom Fields. settings.main_menu.guid is the selected menu reference, separate from the Settings datastore GUID.',
     'The desktop and offcanvas navigation both render nested menu items. Bootstrap bundle JavaScript must be available site-wide for the offcanvas and dropdowns.',
     'The theme navbar script is loaded from /theme/navbar.js. Bootstrap Icons CSS is needed for the telephone icon.',

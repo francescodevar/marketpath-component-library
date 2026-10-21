@@ -1,7 +1,7 @@
 export default {
   id: 'banner-06',
-  name: 'Full-Width Image Title Banner',
-  category: 'banner',
+  name: 'Hero Full-Width Image Title',
+  category: 'hero',
   prefix: 'banner_06_',
   customCss: true,
   customJs: false,
@@ -129,9 +129,7 @@ export default {
     @media(max-width:767.98px){.banner-06-frame{height:42vh;min-height:18rem;max-height:28rem}}
   </style>
   <div class="banner-06-frame position-relative overflow-hidden bg-dark d-flex align-items-center justify-content-center text-center">
-    <svg class="position-absolute top-0 start-0 w-100 h-100" viewBox="0 0 1920 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-      <rect width="1920" height="600" fill="#829a9d"/><path d="M0 380 410 90h620l330 290v220H0z" fill="#887d68"/><path d="M410 90h620l-310-75z" fill="#364550"/><path d="M1030 200 1370 60l550 140v400h-890z" fill="#c3b89f"/><path d="M1030 200 1370 60l550 140" fill="none" stroke="#3a464c" stroke-width="38"/><path d="M90 250h220v220H90zm360-60h160v190H450zm210 0h160v190H660zm420 110h140v190h-140zm190 0h140v190h-140zm190 0h140v190h-140z" fill="#b9d0d2" stroke="#eee8d8" stroke-width="16"/><path d="M200 250v220m-110-110h220m440-250v190m-80-95h160m-290-95v190m-80-95h160m540 270v190m-70-95h140m120-95v190m-70-95h140" stroke="#eee8d8" stroke-width="10"/><path d="M0 515h1920v85H0z" fill="#6f634d"/><path d="M0 545h1920M0 580h1920" stroke="#a98a65" stroke-width="10"/><path d="M0 460q130-190 300-80v135H0m1420-45q170-150 320-15v145h-320" fill="#486447"/><path d="M545 600V425q95-85 190 0v175" fill="#293940"/><path d="M545 425q95-85 190 0" fill="none" stroke="#e6dfce" stroke-width="18"/>
-    </svg>
+    <img src="sample-image:modern" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover" alt="">
     <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-50" aria-hidden="true"></div>
     <div class="container position-relative py-5"><div class="row justify-content-center"><div class="col-12 col-lg-10"><h1 class="display-5 fw-semibold text-white mb-3">A home that feels just right.</h1><p class="lead text-white mb-0">Thoughtful work. Clear communication. A better home.</p></div></div></div>
   </div>

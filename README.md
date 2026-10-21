@@ -6,6 +6,7 @@ Biblioteca visual de wireframes Bootstrap para Marketpath CMS, construida con **
 
 - Node `>= 22.12` o Bun `>= 1.2`.
 - Conexión a Internet en runtime: Bootstrap 5.3.3, Bootstrap Icons y Prism 1.29.0 se cargan por CDN.
+- Tailwind CSS 4 se compila con Vite para las utilidades de la interfaz; no añade una dependencia CDN en runtime.
 
 ## Comandos
 
@@ -17,11 +18,13 @@ Biblioteca visual de wireframes Bootstrap para Marketpath CMS, construida con **
 
 ## Uso
 
-Filtra desde los grupos desplegables Services, Projects, Layout, Resources y Content; solo un grupo queda abierto a la vez. Services agrupa Services e Inside Services; Projects agrupa Projects e Inside Projects. También puedes buscar por nombre, ID, descripción y tags. `/` enfoca la búsqueda. Haz clic en un preview para abrir el detalle, o en **View code** para ir al Template. Las pestañas admiten flechas, Home y End; Escape cierra el diálogo y devuelve el foco. Desktop, Tablet y Mobile usan viewports reales de 1200, 768 y 390 px, escalados para caber en la ventana. El contenido largo se desplaza dentro del iframe.
+Filtra desde Services, Projects, Specific Section, Content y Layout; solo un grupo queda abierto a la vez. Services y Projects agrupan sus variantes Main e Inside. Specific Section reúne Blog, FAQs, Gallery, Contact, Testimonials y Team, con Thank You y Error 404 al final. Content sigue el orden Hero, Banner y Content. Layout contiene Header, Page Title, CTA y Footer. También puedes buscar por nombre, ID, descripción y tags. `/` enfoca la búsqueda. Haz clic en un preview para abrir el detalle, o en **View code** para ir al Template. Las pestañas admiten flechas, Home y End; Escape cierra el diálogo y devuelve el foco. Desktop, Tablet y Mobile usan viewports reales de 1200, 768 y 390 px, escalados para caber en la ventana. El contenido largo se desplaza dentro del iframe.
 
 Copy Template copia solamente Liquid/HTML. Copy Fields copia solamente JSON. Si el navegador no permite Clipboard API, se intenta la copia nativa; si también falla, se selecciona el código y se indica cómo copiarlo manualmente.
 
 En el detalle de cada variante Services puedes descargar un paquete JSON vacío con el partial, sus Page Fields, el template de página y el datastore. **Create Files** genera el mismo paquete con tres items de servicio de ejemplo sin imágenes y un Article que ya los selecciona.
+
+En el Playground, **Prepare an import** permite diseñar un tema multipágina. **Export theme** descarga un ZIP con `ALL.json` y `image/placeholder.jpg`; incluye los templates seleccionados, las páginas correspondientes, los datastores utilizados y contenido de ejemplo para empezar la importación en Marketpath. Completa el dominio destino en **Edit pages** para generar las URL de las páginas y asociar correctamente Error 404.
 
 ## Estructura
 
@@ -36,7 +39,7 @@ En el detalle de cada variante Services puedes descargar un paquete JSON vacío 
 - `src/lib/utils.js`: `escapeHtml`, `categoryLabel` y `previewDocument` (documento del iframe con CSP).
 - `src/layouts/Layout.astro`: `<head>`, dependencias CDN y CSS global.
 - `src/styles/app.css`: estilos de la biblioteca, aislados de los componentes.
-- `tests/check.cjs`: comprobación ejecutable sin dependencias.
+- `tests/check.cjs`: comprobación ejecutable con las dependencias instaladas, sin compilar Astro.
 
 Para agregar un template, crea `src/catalog/<category>/<id>/component.js` y exporta el objeto del componente (`export default { ... }`). No cambies la homepage, las tarjetas ni el registro: Astro descubre la carpeta y genera categoría, filtro, contador, preview y diálogo automáticamente. Si varias variantes necesitan los mismos Page Fields, impórtalos desde `<category>/shared-fields.js` y usa el mismo `sharedFieldsId`; así se copia el JSON una vez y después se puede pegar solo el markup de otra variante. Los componentes pueden referenciar un registro único con `datastoreitem` o una selección múltiple con `datastoreitemlist`; en ambos casos, crea el schema una sola vez en `src/datastores/<id>/datastore.js` y enlázalo mediante `datastoreId`. `preview.html` es HTML de muestra escrito de forma independiente: no se interpreta Liquid y `mockData` es su referencia editorial, no un motor de rendering. El catálogo es código local de confianza; los iframes están aislados mediante sandbox y CSP.
 

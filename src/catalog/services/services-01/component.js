@@ -2,7 +2,7 @@ import { serviceFields } from '../shared-fields.js';
 
 export default {
   id: 'services-01',
-  name: 'Service Cards',
+  name: 'Services Cards Classic',
   category: 'services',
   prefix: 'services_',
   sharedFieldsId: 'services',
@@ -81,7 +81,7 @@ export default {
     <div class="row g-4">
       <div class="col-12 col-md-6 col-lg-4">
         <article class="card h-100 border-0 shadow-sm">
-          <div class="ratio ratio-4x3 bg-light d-flex align-items-center justify-content-center"><span class="text-secondary small">Service image</span></div>
+          <div class="ratio ratio-4x3"><img src="sample-image:modern" class="w-100 h-100 object-fit-cover" alt="Example service"></div>
           <div class="card-body p-4 d-flex flex-column">
             <div class="text-secondary">Open up your space with quality, comfort, and a fresh perspective.</div>
             <h3 class="h4">Windows &amp; doors</h3>
@@ -92,7 +92,7 @@ export default {
       </div>
       <div class="col-12 col-md-6 col-lg-4">
         <article class="card h-100 border-0 shadow-sm">
-          <div class="ratio ratio-4x3 bg-light d-flex align-items-center justify-content-center"><span class="text-secondary small">Service image</span></div>
+          <div class="ratio ratio-4x3"><img src="sample-image:exterior" class="w-100 h-100 object-fit-cover" alt="Example service"></div>
           <div class="card-body p-4 d-flex flex-column">
             <div class="text-secondary">Make more room for the moments you love, outside.</div>
             <h3 class="h4">Decks &amp; outdoors</h3>
@@ -103,7 +103,7 @@ export default {
       </div>
       <div class="col-12 col-md-6 col-lg-4">
         <article class="card h-100 border-0 shadow-sm">
-          <div class="ratio ratio-4x3 bg-light d-flex align-items-center justify-content-center"><span class="text-secondary small">Service image</span></div>
+          <div class="ratio ratio-4x3"><img src="sample-image:home" class="w-100 h-100 object-fit-cover" alt="Example service"></div>
           <div class="card-body p-4 d-flex flex-column">
             <div class="text-secondary">Turn your ideas into a clear plan with an experienced team.</div>
             <h3 class="h4">Design &amp; planning</h3>
